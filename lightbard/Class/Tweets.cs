@@ -9,7 +9,8 @@ using System.Collections.Specialized;
 using Windows.Storage;
 using System.Collections.ObjectModel;
 using Windows.UI.Notifications;
-
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace lightbard.Class
 {
@@ -140,7 +141,71 @@ namespace lightbard.Class
         );
       }
     }
+    /*
+    public async void Inserttweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
+    {
+      string con = status.Text;
+      //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+      //{
+        if (status.RetweetedStatus != null)
+        {
+          tweet.Insert(0, new TweetClass.TweetInfo
+          {
+            UserName = status.RetweetedStatus.User.Name + " ",
+            UserId = status.RetweetedStatus.User.Id,
+            ScreenName = "@" + status.RetweetedStatus.User.ScreenName,
+            ProfileImageUrl = status.RetweetedStatus.User.ProfileImageUrlHttps,
+            Text = System.Net.WebUtility.HtmlDecode(status.RetweetedStatus.Text),
+            Date = status.RetweetedStatus.CreatedAt.LocalDateTime.ToString(),
+            //Date = status.RetweetedStatus.CreatedAt.ToString(),
+            Id = status.RetweetedStatus.Id,
+            //retUser = status.RetweetedStatus,
+            Via = status.RetweetedStatus.Source,
+            FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+            RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
 
+            //Url = m.Value.ToString(),
+            RetweetUser = "Retweeted by @" + status.User.ScreenName,
+            RetweetUserProfileImageUrl = status.User.ProfileImageUrlHttps,
+
+            urls = status.RetweetedStatus.Entities.Urls,
+            //ReplyId = status.RetweetedStatus.InReplyToStatusId
+
+            //media = status.RetweetedStatus.ExtendedEntities.Media
+            //arrayB.CopyTo(arrayA, 0)
+            //media = status.RetweetedStatus.Entities.Media.CopyTo(media, 0)
+
+          }
+            );
+        }
+        else
+        {
+
+          tweet.Insert(0, new TweetClass.TweetInfo
+          {
+            UserName = status.User.Name + " ",
+            UserId = status.User.Id,
+            ScreenName = "@" + status.User.ScreenName,
+            ProfileImageUrl = status.User.ProfileImageUrlHttps,
+            Text = System.Net.WebUtility.HtmlDecode(status.Text),
+            Date = status.CreatedAt.LocalDateTime.ToString(),
+            //Date = status.RetweetedStatus.CreatedAt.ToString(),
+            Id = status.Id,
+            //retUser = status.RetweetedStatus,
+            //Url = m.Value.ToString(),
+            FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+            RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+            Via = status.Source,
+            RetweetUser = null,
+            urls = status.Entities.Urls,
+            //ReplyId = status.InReplyToStatusId
+
+          }
+          );
+        }
+      //});
+    }
+    */
     //通知関連
     private void toast(string text1)
     {

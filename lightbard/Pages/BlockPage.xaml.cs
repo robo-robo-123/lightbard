@@ -32,7 +32,8 @@ namespace lightbard.Pages
     public long? UserId { get; set; }
     public string name { get; set; }
 
-    List<TweetClass.UserInfo> user;
+    List<TweetClass.UserInfo> mute_user;
+    List<TweetClass.UserInfo> block_user;
 
     public BlockPage()
     {
@@ -41,27 +42,21 @@ namespace lightbard.Pages
 
       var settings = ApplicationData.Current.RoamingSettings;
       UserId = (long?)settings.Values["UserId"];
-
-
       muteInfo();
+      blockInfo();
     }
 
     private async void muteInfo()
     {
       if (tokens != null)
       {
-
-
-        user = new List<TweetClass.UserInfo>();
+        mute_user = new List<TweetClass.UserInfo>();
         try
         {
-
-         
           foreach (var status in await tokens.Mutes.Users.ListAsync())
-
           {
             //data.AddInfo(userPro2, status);
-            user.Add(new TweetClass.UserInfo
+            mute_user.Add(new TweetClass.UserInfo
             {
               UserName = status.Name,
               UserId = status.Id,
@@ -71,65 +66,46 @@ namespace lightbard.Pages
               FavCount = status.FavouritesCount,
               FollowerCount = status.FriendsCount,
               Prof = status.Description
-
             });
-
           }
-          this.muteView.ItemsSource = user;
+          this.muteView.ItemsSource = mute_user;
         }
-
         catch (Exception ex)
-
         {
-
         }
-
       }
-
     }
-/*
+
     private async void blockInfo()
     {
       if (tokens != null)
       {
-
-
-        user = new List<TweetClass.UserInfo>();
+        block_user = new List<TweetClass.UserInfo>();
         try
         {
-
-
           foreach (var status in await tokens.Blocks.ListAsync())
-
           {
             //data.AddInfo(userPro2, status);
-            user.Add(new TweetClass.UserInfo
+            block_user.Add(new TweetClass.UserInfo
             {
               UserName = status.Name,
               UserId = status.Id,
               ScreenName = "@" + status.ScreenName,
-              ProfileImageUrl = status.ProfileImageUrlHttps.OriginalString,
+              ProfileImageUrl = status.ProfileImageUrlHttps,
               FollowCount = status.FollowersCount,
               FavCount = status.FavouritesCount,
               FollowerCount = status.FriendsCount,
               Prof = status.Description
-
             });
-
           }
-          this.muteView.ItemsSource = user;
+          this.blockView.ItemsSource = block_user;
         }
-
         catch (Exception ex)
-
         {
-
         }
-
       }
-
     }
-    */
+    
     private void Button_Click(object sender, RoutedEventArgs e)
     {
       muteInfo();

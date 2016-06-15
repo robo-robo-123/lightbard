@@ -107,6 +107,13 @@
         </AppBarButton.Icon>
       </AppBarButton>
 -->
+      
+      <AppBarToggleButton x:Name="streamButton"  Label="stream" Checked="streamButton_Checked" Unchecked="streamButton_Unchecked"  >
+        <AppBarToggleButton.Icon>
+          <FontIcon Glyph="&#xE895;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarToggleButton.Icon>
+      </AppBarToggleButton>      
+      
       <AppBarButton x:Name="reloadButton"  Label="Reload" Click="reloadButton_Click" >
         <AppBarButton.Icon>
           <FontIcon Glyph="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="20" />

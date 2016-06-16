@@ -86,15 +86,20 @@ namespace lightbard.Pages
     //ストリーミング
     private async void streamingtest()
     {
+      try {
       sm_stream = tokens.Streaming.UserAsObservable().Publish();
       sm_stream.OfType<StatusMessage>().Subscribe(x => streamLoad(x));
 
       disposable = sm_stream.Connect();
       //testBlock.Text = "接続中です";
 
-      await Task.Delay(300 * 1000);
+      await Task.Delay(300 * 1000);//時間を指定できるように
       disposable.Dispose();
-      //testBlock.Text = "接続終了";
+      streamButton.IsChecked = false;
+        //testBlock.Text = "接続終了";
+      }
+      catch(Exception ex)
+      { }
     }
 
     private async void streamLoad(StatusMessage x)
@@ -314,7 +319,11 @@ namespace lightbard.Pages
 
     private void streamButton_Unchecked(object sender, RoutedEventArgs e)
     {
+      try { 
       disposable.Dispose();
+      }
+      catch(Exception ex)
+      { }
     }
   }
 

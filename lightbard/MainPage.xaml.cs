@@ -16,6 +16,7 @@ using Windows.UI.Core;
 using Windows.Storage;
 using CoreTweet;
 using lightbard.Class;
+using Windows.UI.Popups;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
 
@@ -59,7 +60,7 @@ namespace lightbard
 
     }
 
-    private void nameChange()
+    private async void nameChange()
     {
       var settings = ApplicationData.Current.RoamingSettings;
       try
@@ -69,8 +70,15 @@ namespace lightbard
       catch
       {
         titleBlock.Text = "";
+        var dlg = new MessageDialog("ログインされていません．ログインしますか？「はい」で設定ページへ移動します．", "ログインの確認");
+        dlg.Commands.Add(new UICommand("はい", (cmd) => { this.testFrame.Navigate(typeof(SettingsFrame)); }));
+        dlg.Commands.Add(new UICommand("いいえ", (cmd) => {  }));
+        await dlg.ShowAsync();
+
       }
     }
+
+
 
     private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
     {

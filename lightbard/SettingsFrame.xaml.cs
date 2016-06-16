@@ -111,5 +111,30 @@ private void BackButton_Click(object sender, RoutedEventArgs e)
      // var dlg = new MessageDialog("反映するには再起動してください", "完了");
      // await dlg.ShowAsync();
     }
+
+
+
+    private async void cancelAccount()
+    {
+      var settings = ApplicationData.Current.RoamingSettings;
+      settings.Values["AccessToken"] = null;
+      settings.Values["AccessTokenSecret"] = null;
+      settings.Values["ScreenName"] = null;
+      settings.Values["UserId"] = null;
+
+      var dlg = new MessageDialog("アカウントを削除しました。再度ログインするか、このアプリを再起動してください。", "ログインの確認");
+      dlg.Commands.Add(new UICommand("はい", (cmd) => { }));
+      await dlg.ShowAsync();
+
+
+    }
+
+    private async void deletButton_Click(object sender, RoutedEventArgs e)
+    {
+      var dlg = new MessageDialog("アカウントを削除しますか？", "ログインの確認");
+      dlg.Commands.Add(new UICommand("はい", (cmd) => { cancelAccount(); }));
+      dlg.Commands.Add(new UICommand("いいえ", (cmd) => {  }));
+      await dlg.ShowAsync();
+    }
   }
 }

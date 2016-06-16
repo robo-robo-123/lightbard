@@ -32,6 +32,9 @@
             <TextBlock Text="アカウント登録"/>
             <Button x:Name="registButton" Content="登録" Click="registButton_Click"/>
 
+            <TextBlock Text="アカウント削除" Margin="0,20,0,0"/>
+            <Button x:Name="deletButton" Content="削除" Click="deletButton_Click" />
+
           </StackPanel>
 
         </Grid>

@@ -12,8 +12,7 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="30" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="30" />
-      <RowDefinition Height="30" />
+      <RowDefinition Height="50" />
     </Grid.RowDefinitions>
 
     <!--
@@ -35,6 +34,7 @@
 
       <Button x:Name="okButton" Content="OK" Click="okButton_Click"  />
 
+      <Button x:Name="webButton" Content="open Web" Margin="20,0,0,0" Click="webButton_Click" />
 
     </StackPanel>
 <!--

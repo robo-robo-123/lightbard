@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using CoreTweet;
 using Windows.Storage;
 using lightbard.Class;
+using Windows.UI.Popups;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -27,6 +28,7 @@ namespace lightbard.Settings
   {
     OAuth.OAuthSession session;
     internal Tokens tokens;
+    Uri session_url;
     public AccountPage()
     {
       this.InitializeComponent();
@@ -62,13 +64,8 @@ namespace lightbard.Settings
             , (string)settings.Values["ApiSecret"]);
 
         authWeb.Source = session.AuthorizeUri;
+        session_url = session.AuthorizeUri;
 
-
-        //pinURITextBox.Text = session.AuthorizeUri.ToString();
-
-        //pinTextBox.e.ClearValuer();
-
-        // System.Diagnostics.Process.Start(session.AuthorizeUri.ToString());
 
       }
 
@@ -145,7 +142,9 @@ namespace lightbard.Settings
         // 表示調整
 
         //owner.updatescreennameLabel(owner.tokens.ScreenName);
-
+        var dlg = new MessageDialog("ログインが正常に完了しました．一度このアプリを再起動してください．", "ログインの確認");
+        dlg.Commands.Add(new UICommand("はい", (cmd) => {  }));
+        await dlg.ShowAsync();
 
 
         //  MessageBox.Show("verified: " + tokens.ScreenName);
@@ -162,12 +161,14 @@ namespace lightbard.Settings
       {
 
         // やり直し
-
+        var dlg = new MessageDialog("ログインに問題が発生しました．もう一度試してください．", "ログインの確認");
+        dlg.Commands.Add(new UICommand("はい", (cmd) => { }));
+        await dlg.ShowAsync();
         //MessageBox.Show(ex.Message);
-     //   var dialog = new ModernDialog1(ex.Message);
-      //  dialog.ShowDialog();
+        //   var dialog = new ModernDialog1(ex.Message);
+        //  dialog.ShowDialog();
 
-      //  initAuthrize();
+        //  initAuthrize();
 
       }
 
@@ -180,6 +181,9 @@ namespace lightbard.Settings
       initAuthrize();
     }
 
-
+    private async void webButton_Click(object sender, RoutedEventArgs e)
+    {
+      var success = await Windows.System.Launcher.LaunchUriAsync(session_url);
+    }
   }
 }

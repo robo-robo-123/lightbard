@@ -34,7 +34,7 @@ namespace lightbard.Pages
   /// </summary>
   public sealed partial class Home : Page
   {
-
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
     internal Tokens tokens;
     Tweets data = new Tweets();
     ObservableCollection<TweetClass.TweetInfo> tweet;
@@ -91,9 +91,10 @@ namespace lightbard.Pages
       sm_stream.OfType<StatusMessage>().Subscribe(x => streamLoad(x));
 
       disposable = sm_stream.Connect();
-      //testBlock.Text = "接続中です";
-
-      await Task.Delay(300 * 1000);//時間を指定できるように
+        //testBlock.Text = "接続中です";
+        var xx = ViewModel.streamCount();
+        int tw_count = int.Parse(xx);
+        await Task.Delay(tw_count * 600);
       disposable.Dispose();
       streamButton.IsChecked = false;
         //testBlock.Text = "接続終了";

@@ -84,10 +84,11 @@ namespace lightbard
 
             if (rootFrame.Content == null)
             {
-                // ナビゲーション スタックが復元されない場合は、最初のページに移動します。
-                // このとき、必要な情報をナビゲーション パラメーターとして渡して、新しいページを
-                //構成します
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+        // ナビゲーション スタックが復元されない場合は、最初のページに移動します。
+        // このとき、必要な情報をナビゲーション パラメーターとして渡して、新しいページを
+        //構成します
+        Models.CommandModel.Instance.LoadCount();
+        rootFrame.Navigate(typeof(MainPage), e.Arguments);
 
 
         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -147,9 +148,13 @@ namespace lightbard
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: アプリケーションの状態を保存してバックグラウンドの動作があれば停止します
-            deferral.Complete();
+      //TODO: アプリケーションの状態を保存してバックグラウンドの動作があれば停止します
+      Models.CommandModel.Instance.SaveCount();
+      deferral.Complete();
+
+
         }
+
 
     /*
     private void UpdateBackButtonState()

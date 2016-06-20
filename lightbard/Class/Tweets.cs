@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Notifications;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using System.Diagnostics;
 
 namespace lightbard.Class
 {
@@ -21,6 +22,9 @@ namespace lightbard.Class
     ObservableCollection<TweetClass.TweetInfo> tweet;
     ObservableCollection<TweetClass.TweetInfo> reply;
     List<TweetClass.UserInfo> userPro;
+    int tw_count;
+
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
 
     public Tweets()
     {
@@ -62,7 +66,18 @@ namespace lightbard.Class
     public async Task<ObservableCollection<TweetClass.TweetInfo>> tweetload()
     {
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
-      foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => 800))
+      try
+      {
+        var x =  ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+        //tw_count = 100;
+        //Debug.WriteLine(tw_count);
+
+      }
+      catch
+    { }
+      //if (tw_count == ) tw_count = 100; 
+      foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => tw_count))
       {
         Addtweet(tweet, status);
       }
@@ -72,7 +87,15 @@ namespace lightbard.Class
     public async Task<ObservableCollection<TweetClass.TweetInfo>> mentionload()
     {
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
-      foreach (var status in await tokens.Statuses.MentionsTimelineAsync(count => 800))
+      var value = ApplicationData.Current.RoamingSettings;
+      try
+      {
+       // tw_count = (int)value.Values["tweetsCount"];
+        tw_count = 100;
+      }
+      catch
+      { }
+      foreach (var status in await tokens.Statuses.MentionsTimelineAsync(count => tw_count))
       {
         Addtweet(tweet, status);
       }

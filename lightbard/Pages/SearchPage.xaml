@@ -33,12 +33,12 @@
         </StackPanel>
         </ScrollViewer>
       </PivotItem>
-
+<!--
       <PivotItem x:Name="trendItem" x:Uid="Trend" Header="trend" Margin="0,0,0,50" >
         <ListView x:Name="trendView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
         </ListView>
       </PivotItem>
-
+-->
       <PivotItem x:Name="userItem"  Header="user" Margin="12,0,12,50"  >
         <ScrollViewer>
         <StackPanel>

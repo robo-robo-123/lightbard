@@ -126,7 +126,7 @@ namespace lightbard.Pages
 
           //foreach (var status in await tokens.Search.TweetsAsync(q => serchBox.Text, count => 200, lang => "ja"))
 
-          trendView.ItemsSource = result;
+          //trendView.ItemsSource = result;
         }
         catch (Exception ex)
         {

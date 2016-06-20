@@ -22,6 +22,8 @@ namespace lightbard.Pages
   /// </summary>
   public sealed partial class MainFrame : Page
   {
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
+
     public MainFrame()
     {
       this.InitializeComponent();

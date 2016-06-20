@@ -30,6 +30,8 @@ namespace lightbard
     OAuth.OAuthSession session;
     internal Tokens tokens;
 
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
+
     public SettingsFrame()
     {
       this.InitializeComponent();
@@ -37,6 +39,7 @@ namespace lightbard
 
       this.blockFrame.Navigate(typeof(Pages.BlockPage));
       release();
+      
 
     }
 
@@ -135,6 +138,17 @@ private void BackButton_Click(object sender, RoutedEventArgs e)
       dlg.Commands.Add(new UICommand("はい", (cmd) => { cancelAccount(); }));
       dlg.Commands.Add(new UICommand("いいえ", (cmd) => {  }));
       await dlg.ShowAsync();
+    }
+
+    private async void tweetsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      var x = ViewModel.streamCount();
+      //int tw_count = int.Parse(x);
+      //tw_count = 100;
+      await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+      {
+        test.Text = x;
+      });
     }
   }
 }

@@ -24,13 +24,14 @@
       <MenuFlyoutItem x:Name="conveItem" Text="Conversation" Tag="Conversation" Click="conveItem_Click"  />
 
       <MenuFlyoutSeparator/>
-      <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="retweetButton_Click"
+      <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="{x:Bind ViewModel.Retweet}"
                          />
       <!--DataContext="{Binding}"-->
-      <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="favoriteButton_Click"
-                        />
-      <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click"
-                         />
+      <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="{x:Bind ViewModel.Like}" />
+     <!--<MenuFlyoutItem x:Name="likeItem_test" Text="Like_test" Tag="Like_test" Click="{x:Bind ViewModel.Like}" />--> 
+      <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click" />
+      <!--<MenuFlyoutItem x:Name="testItem"  Tag="Detail" Click="replyButton_Click" />-->
+      
     </MenuFlyout>
   </Page.Resources>
 

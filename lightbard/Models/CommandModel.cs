@@ -4,12 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using lightbard.Class;
 
 namespace lightbard.Models
 {
   public class CommandModel : Common.BindableBase
   {
     public static CommandModel Instance { get; } = new CommandModel();
+    Tweets data = new Tweets();
+
+    public CommandModel()
+      {
+      data.getToken();
+      }
 
     public void RetweetToast()
     {
@@ -33,6 +40,16 @@ namespace lightbard.Models
     {
       get { return this.tweetId; }
       set { this.SetProperty(ref this.tweetId, value); }
+    }
+
+    public void Like()
+    {
+      data.like(this.TweetId);
+    }
+
+    public void Retweet()
+    {
+      data.retweet(this.TweetId);
     }
 
     private int tweetCountIndex;

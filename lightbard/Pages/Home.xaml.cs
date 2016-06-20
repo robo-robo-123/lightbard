@@ -38,6 +38,7 @@ namespace lightbard.Pages
     internal Tokens tokens;
     Tweets data = new Tweets();
     ObservableCollection<TweetClass.TweetInfo> tweet;
+    //ObservableCollection<TweetClass.TweetInfo> tweetInfo;
 
     IConnectableObservable<StreamingMessage> sm_stream;
     IDisposable disposable;
@@ -62,6 +63,7 @@ namespace lightbard.Pages
 
       var settings = ApplicationData.Current.RoamingSettings;
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
+      //tweetInfo = new ObservableCollection<TweetClass.TweetInfo>();
 
     }
 
@@ -211,6 +213,7 @@ namespace lightbard.Pages
     /// <param name="sender"></param>
     /// <param name="e"></param>
 
+      /*
     //お気に入り．
     private void favoriteButton_Click(object sender, RoutedEventArgs e)
     {
@@ -238,12 +241,12 @@ namespace lightbard.Pages
         data.retweet(item.Id);
       }
     }
-    
-    ///
+    */
 
     //userinfo
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
     {
+      /*
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       if (item == null)
       {
@@ -252,13 +255,15 @@ namespace lightbard.Pages
       else
       {
         var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(UserPage), item_send.UserId);
+        */
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
         //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      }
+      //}
     }
 
     private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
     {
+      /*
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       if (item == null)
       {
@@ -267,14 +272,15 @@ namespace lightbard.Pages
       else
       {
         var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(UserPage), item_send.UserId);
+        */this.Frame.Navigate(typeof(UserPage), item.UserId);
         //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      }
+      //}
   }
 
 
     private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
+      /*
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       if (item == null)
       {
@@ -283,18 +289,45 @@ namespace lightbard.Pages
       else
       {
         var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(UserPage), item_send.UserId);
+        */this.Frame.Navigate(typeof(UserPage), item.UserId);
         //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      }
+      //}
     }
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
     {
+      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+/*
+      if (item == null)
+      {
+        return;
+      }
+      else
+      {
+      */
+        ViewModel.TweetIdSet(item.Id);
+      itemStock();
+      //      }
+      // this.testItem.Text = item.Id.ToString();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    public void itemStock()
+    {
+      var item_test = this.listView.SelectedItem as TweetClass.TweetInfo;
+      if (item_test == null)
+      {
+        return;
+      }
+      else
+      {
+        item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      }
     }
 
     private void conveItem_Click(object sender, RoutedEventArgs e)
     {
+      /*
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       if (item == null)
       {
@@ -303,13 +336,25 @@ namespace lightbard.Pages
       else
       {
         var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(ConvePage), item_send.Id);
+        */this.Frame.Navigate(typeof(ConvePage), item.Id);
         //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      }
+     // }
     }
 
     private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
+      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      /*
+            if (item == null)
+            {
+              return;
+            }
+            else
+            {
+            */
+      ViewModel.TweetIdSet(item.Id);
+      itemStock();
+      //      }
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 

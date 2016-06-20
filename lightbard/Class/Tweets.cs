@@ -252,17 +252,19 @@ namespace lightbard.Class
       try
       {
         await tokens.Favorites.CreateAsync(id => itemid);
+        var tes = "'いいね'しました";
+        toast(itemid.ToString() + tes);
       }
-      catch
+      catch(Exception ex)
       {
+        toast(itemid.ToString() +  ex.Message);
       }
     }
 
     public void like(long id)
     {
       favasync(id);
-      var tes = "'いいね'しました";
-      toast(tes);
+
     }
 
     //リツイート

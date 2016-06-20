@@ -16,6 +16,20 @@ namespace lightbard.ViewModels
       set { this.Model.TweetId = value; }
     }
 
+    public void TweetIdSet(long value)
+    {
+      this.Model.TweetId = value; 
+    }
+
+    public void Like()
+    {
+      this.Model.Like();
+    }
+
+    public void Retweet()
+    {
+      this.Model.Retweet();
+    }
 
     public bool PivotToggleSwtich
     {

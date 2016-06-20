@@ -112,6 +112,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CommandModel.cs" />
+    <Compile Include="Models\Tweet.cs" />
     <Compile Include="Pages\BlockPage.xaml.cs">
       <DependentUpon>BlockPage.xaml</DependentUpon>
     </Compile>

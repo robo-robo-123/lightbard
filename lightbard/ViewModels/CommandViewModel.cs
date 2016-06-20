@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using lightbard.Common;
+using lightbard.Models;
 
 namespace lightbard.ViewModels
 {
@@ -75,6 +78,41 @@ namespace lightbard.ViewModels
       get { return this.Model.StreamCountIndex; }
       set { this.Model.StreamCountIndex = value; }
     }
+
+
+  }
+
+  public class TweetPageViewModel : Common.BindableBase
+  {
+    private Models.TweetLoad Model { get; } = Models.TweetLoad.Instance;
+
+    //  public ObservableCollection<TweetInfo> TweetInfos { get; set; }
+
+    public ObservableCollection<TweetInfo> TweetInfos
+    {
+      get { return this.Model.TweetInfoManager.TweetInfos; }
+      set { this.Model.TweetInfoManager.TweetInfos = value; }
+    }
+
+    public TweetPageViewModel()
+    {
+      //this.TweetInfos = new ObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    /*
+    public void GetTweetInfos()
+    {
+      this.Model.TweetInfoManager.getTweetInfos();
+    }
+    */
+
+
+    public void GetTweetInfos()
+    {
+      //this.TweetInfos = new ObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+
 
 
   }

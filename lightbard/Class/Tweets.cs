@@ -12,6 +12,9 @@ using Windows.UI.Notifications;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using System.Diagnostics;
+using System.Reactive.Subjects;
+using CoreTweet.Streaming;
+using System.Reactive.Linq;
 
 namespace lightbard.Class
 {
@@ -22,6 +25,8 @@ namespace lightbard.Class
     ObservableCollection<TweetClass.TweetInfo> tweet;
     ObservableCollection<TweetClass.TweetInfo> reply;
     List<TweetClass.UserInfo> userPro;
+    IConnectableObservable<StreamingMessage> sm_stream;
+    IDisposable disposable;
     int tw_count;
 
     public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
@@ -73,16 +78,46 @@ namespace lightbard.Class
         //tw_count = 100;
         //Debug.WriteLine(tw_count);
 
-      }
-      catch
-    { }
+
       //if (tw_count == ) tw_count = 100; 
       foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => tw_count))
       {
         Addtweet(tweet, status);
       }
+      }
+      catch
+    {
+
+      }
       return tweet;
     }
+
+    public async void tweetload2(ObservableCollection<Models.TweetInfo> tweet)
+    {
+      try
+      {
+        var x = ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("1"+tes);
+      }
+      try
+      {
+        foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => tw_count))
+      {
+        Addtweet2(tweet, status);
+      }
+      }
+      catch(Exception ex)
+      {
+        var tes = ex.Message;
+        toast("2"+tes);
+      }
+    }
+
 
     public async Task<ObservableCollection<TweetClass.TweetInfo>> mentionload()
     {
@@ -103,7 +138,103 @@ namespace lightbard.Class
     }
 
 
-  public void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
+    //ストリーミング
+    public async void streamingtest(ObservableCollection<TweetClass.TweetInfo> tweet)
+    {
+      try
+      {
+        sm_stream = tokens.Streaming.UserAsObservable().Publish();
+        sm_stream.OfType<StatusMessage>().Subscribe(x => streamLoad(x, tweet));
+
+        disposable = sm_stream.Connect();
+        //testBlock.Text = "接続中です";
+        var xx = ViewModel.streamCount();
+        int tw_count = int.Parse(xx);
+        await Task.Delay(tw_count * 600);
+        disposable.Dispose();
+        //streamButton.IsChecked = false;
+        //testBlock.Text = "接続終了";
+      }
+      catch (Exception ex)
+      { }
+    }
+
+    private async void streamLoad(StatusMessage x, ObservableCollection<TweetClass.TweetInfo> tweet)
+    {
+      Status status = x.Status;
+      Inserttweet(tweet, status);
+      //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+      //{
+      //  this.listView.ItemsSource = tweet;
+      //});
+    }
+
+    public async void Inserttweet(ObservableCollection<TweetClass.TweetInfo> tweet2, Status status)
+    {
+      //string con = status.Text;
+     // await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+     //{
+        if (status.RetweetedStatus != null)
+        {
+          tweet2.Insert(0, new TweetClass.TweetInfo
+          {
+            UserName = status.RetweetedStatus.User.Name + " ",
+            UserId = status.RetweetedStatus.User.Id,
+            ScreenName = "@" + status.RetweetedStatus.User.ScreenName,
+            ProfileImageUrl = status.RetweetedStatus.User.ProfileImageUrlHttps,
+            Text = System.Net.WebUtility.HtmlDecode(status.RetweetedStatus.Text),
+            Date = status.RetweetedStatus.CreatedAt.LocalDateTime.ToString(),
+            //Date = status.RetweetedStatus.CreatedAt.ToString(),
+            Id = status.RetweetedStatus.Id,
+            //retUser = status.RetweetedStatus,
+            Via = status.RetweetedStatus.Source,
+            FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+            RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+
+            //Url = m.Value.ToString(),
+            RetweetUser = "Retweeted by @" + status.User.ScreenName,
+            RetweetUserProfileImageUrl = status.User.ProfileImageUrlHttps,
+
+            urls = status.RetweetedStatus.Entities.Urls,
+            //ReplyId = status.RetweetedStatus.InReplyToStatusId
+
+            //media = status.RetweetedStatus.ExtendedEntities.Media
+            //arrayB.CopyTo(arrayA, 0)
+            //media = status.RetweetedStatus.Entities.Media.CopyTo(media, 0)
+
+          }
+            );
+        }
+        else
+        {
+
+          tweet2.Insert(0, new TweetClass.TweetInfo
+          {
+            UserName = status.User.Name + " ",
+            UserId = status.User.Id,
+            ScreenName = "@" + status.User.ScreenName,
+            ProfileImageUrl = status.User.ProfileImageUrlHttps,
+            Text = System.Net.WebUtility.HtmlDecode(status.Text),
+            Date = status.CreatedAt.LocalDateTime.ToString(),
+            //Date = status.RetweetedStatus.CreatedAt.ToString(),
+            Id = status.Id,
+            //retUser = status.RetweetedStatus,
+            //Url = m.Value.ToString(),
+            FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+            RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+            Via = status.Source,
+            RetweetUser = null,
+            urls = status.Entities.Urls,
+            //ReplyId = status.InReplyToStatusId
+
+          }
+          );
+        }
+     // });
+    }
+
+
+    public void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
     {
       string con = status.Text;
       if (status.RetweetedStatus != null)
@@ -142,6 +273,68 @@ namespace lightbard.Class
       {
 
         tweet.Add(new TweetClass.TweetInfo
+        {
+          UserName = status.User.Name + " ",
+          UserId = status.User.Id,
+          ScreenName = "@" + status.User.ScreenName,
+          ProfileImageUrl = status.User.ProfileImageUrlHttps,
+          Text = System.Net.WebUtility.HtmlDecode(status.Text),
+          Date = status.CreatedAt.LocalDateTime.ToString(),
+          //Date = status.RetweetedStatus.CreatedAt.ToString(),
+          Id = status.Id,
+          //retUser = status.RetweetedStatus,
+          //Url = m.Value.ToString(),
+          FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+          RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+          Via = status.Source,
+          RetweetUser = null,
+          urls = status.Entities.Urls,
+          //ReplyId = status.InReplyToStatusId
+
+        }
+        );
+      }
+    }
+
+    public void Addtweet2(ObservableCollection<Models.TweetInfo> tweet, Status status)
+    {
+      string con = status.Text;
+      if (status.RetweetedStatus != null)
+      {
+
+        tweet.Add(new Models.TweetInfo
+        {
+          UserName = status.RetweetedStatus.User.Name + " ",
+          UserId = status.RetweetedStatus.User.Id,
+          ScreenName = "@" + status.RetweetedStatus.User.ScreenName,
+          ProfileImageUrl = status.RetweetedStatus.User.ProfileImageUrlHttps,
+          Text = System.Net.WebUtility.HtmlDecode(status.RetweetedStatus.Text),
+          Date = status.RetweetedStatus.CreatedAt.LocalDateTime.ToString(),
+          //Date = status.RetweetedStatus.CreatedAt.ToString(),
+          Id = status.RetweetedStatus.Id,
+          //retUser = status.RetweetedStatus,
+          Via = status.RetweetedStatus.Source,
+          FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+          RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+
+          //Url = m.Value.ToString(),
+          RetweetUser = "Retweeted by @" + status.User.ScreenName,
+          RetweetUserProfileImageUrl = status.User.ProfileImageUrlHttps,
+
+          urls = status.RetweetedStatus.Entities.Urls,
+          //ReplyId = status.RetweetedStatus.InReplyToStatusId
+
+          //media = status.RetweetedStatus.ExtendedEntities.Media
+          //arrayB.CopyTo(arrayA, 0)
+          //media = status.RetweetedStatus.Entities.Media.CopyTo(media, 0)
+
+        }
+          );
+      }
+      else
+      {
+
+        tweet.Add(new Models.TweetInfo
         {
           UserName = status.User.Name + " ",
           UserId = status.User.Id,

@@ -35,6 +35,8 @@ namespace lightbard.Pages
   public sealed partial class Home : Page
   {
     public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
+    public ViewModels.TweetPageViewModel ViewModel2 { get; } = new ViewModels.TweetPageViewModel();
+
     internal Tokens tokens;
     Tweets data = new Tweets();
     ObservableCollection<TweetClass.TweetInfo> tweet;
@@ -71,18 +73,6 @@ namespace lightbard.Pages
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
       item = (TweetClass.TweetInfo)e.Parameter;
-    }
-
-    //tweetをロードするのに使います
-    private async void tweetLoad()
-    {
-      Task<ObservableCollection<TweetClass.TweetInfo>> tweetload = data.tweetload();
-      try {
-        this.listView.ItemsSource = await tweetload;
-        tweet = await tweetload;
-      }
-      catch(Exception ex)
-      { }
     }
 
     //ストリーミング
@@ -122,7 +112,7 @@ namespace lightbard.Pages
       {
       if (status.RetweetedStatus != null)
       {
-        tweet.Insert(0, new TweetClass.TweetInfo
+        tweet2.Insert(0, new TweetClass.TweetInfo
         {
           UserName = status.RetweetedStatus.User.Name + " ",
           UserId = status.RetweetedStatus.User.Id,
@@ -154,7 +144,7 @@ namespace lightbard.Pages
       else
       {
 
-        tweet.Insert(0, new TweetClass.TweetInfo
+        tweet2.Insert(0, new TweetClass.TweetInfo
         {
           UserName = status.User.Name + " ",
           UserId = status.User.Id,
@@ -180,6 +170,19 @@ namespace lightbard.Pages
     }
 
 
+    //tweetをロードするのに使います
+    private async void tweetLoad()
+    {
+      Task<ObservableCollection<TweetClass.TweetInfo>> tweetload = data.tweetload();
+      try
+      {
+        this.listView.ItemsSource = await tweetload;
+        tweet = await tweetload;
+      }
+      catch (Exception ex)
+      { }
+    }
+
     //ロードボタンです．
     private void reloadButton_Click(object sender, RoutedEventArgs e)
     {
@@ -187,19 +190,11 @@ namespace lightbard.Pages
      // streamingtest();
     }
 
-    //リプライページに飛びます．※ツイートに関しては，下のツイートと共通化させたい．
+    //リプライページに飛びます．
     private void replyButton_Click(object sender, RoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(ReplayPage), item_send);
-      }
+
+        this.Frame.Navigate(typeof(ReplayPage), item);
     }
 
     private void tweetButton_Click(object sender, RoutedEventArgs e)
@@ -246,69 +241,26 @@ namespace lightbard.Pages
     //userinfo
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
     {
-      /*
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        */
+
       this.Frame.Navigate(typeof(UserPage), item.UserId);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      //}
     }
 
     private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      /*
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        */this.Frame.Navigate(typeof(UserPage), item.UserId);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      //}
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
   }
 
 
     private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      /*
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        */this.Frame.Navigate(typeof(UserPage), item.UserId);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      //}
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
     }
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
     {
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-/*
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-      */
-        ViewModel.TweetIdSet(item.Id);
+      ViewModel.TweetIdSet(item.Id);
       itemStock();
-      //      }
-      // this.testItem.Text = item.Id.ToString();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 
@@ -327,39 +279,20 @@ namespace lightbard.Pages
 
     private void conveItem_Click(object sender, RoutedEventArgs e)
     {
-      /*
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        */this.Frame.Navigate(typeof(ConvePage), item.Id);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
-     // }
+      this.Frame.Navigate(typeof(ConvePage), item.Id);
     }
 
     private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      /*
-            if (item == null)
-            {
-              return;
-            }
-            else
-            {
-            */
       ViewModel.TweetIdSet(item.Id);
       itemStock();
-      //      }
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 
     private void streamButton_Checked(object sender, RoutedEventArgs e)
     {
+      //data.streamingtest(tweet);
       streamingtest();
     }
 

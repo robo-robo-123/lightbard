@@ -50,7 +50,8 @@
 -->
 
 
-    <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >
+    <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel2.TweetInfos}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
+      <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >
       <ListView.ItemTemplate >
         <DataTemplate >
           <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
@@ -113,9 +114,10 @@
         <AppBarToggleButton.Icon>
           <FontIcon Glyph="&#xE895;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
         </AppBarToggleButton.Icon>
-      </AppBarToggleButton>      
-      
-      <AppBarButton x:Name="reloadButton"  Label="Reload" Click="reloadButton_Click" >
+      </AppBarToggleButton>
+
+     <!-- <AppBarButton x:Name="reloadButton"  Label="Reload" Click="{x:Bind ViewModel2.GetTweetInfos}" >-->
+        <AppBarButton x:Name="reloadButton"  Label="Reload" Click="reloadButton_Click" >
         <AppBarButton.Icon>
           <FontIcon Glyph="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
         </AppBarButton.Icon>

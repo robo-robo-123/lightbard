@@ -32,6 +32,7 @@ namespace lightbard.Pages
 
     internal Tokens tokens;
     Tweets data = new Tweets();
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
 
     ObservableCollection<TweetClass.TweetInfo> tweet;
     public long? UserId { get; set; }
@@ -77,70 +78,67 @@ namespace lightbard.Pages
       mentionLoad();
     }
 
-    //リプライページに飛びます．※ツイートに関しては，下のツイートと共通化させたい．
+    //リプライページに飛びます．
     private void replyButton_Click(object sender, RoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(ReplayPage), item_send);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      }
 
+      this.Frame.Navigate(typeof(ReplayPage), item);
     }
 
-    //お気に入り．
-    private void favoriteButton_Click(object sender, RoutedEventArgs e)
+    private void tweetButton_Click(object sender, RoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        favoriteBlock.Text = "未選択です";
-        return;
-      }
-      else
-      {
-          data.like(item.Id);
-      }
-    }
-
-    //リツイート
-    private void retweetButton_Click(object sender, RoutedEventArgs e)
-    {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        data.retweet(item.Id);
-      }
+      this.Frame.Navigate(typeof(TweetPage));
     }
 
     //userinfo
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
     {
+
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+    private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+
+    private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+    private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
+    {
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
+      ViewModel.TweetIdSet(item.Id);
+      itemStock();
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    public void itemStock()
+    {
+      var item_test = this.listView.SelectedItem as TweetClass.TweetInfo;
+      if (item_test == null)
       {
         return;
       }
       else
       {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(UserPage), item_send.UserId);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
+        item = this.listView.SelectedItem as TweetClass.TweetInfo;
       }
     }
 
-    private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
+    private void conveItem_Click(object sender, RoutedEventArgs e)
     {
+      this.Frame.Navigate(typeof(ConvePage), item.Id);
+    }
+
+    private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
+    {
+      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      ViewModel.TweetIdSet(item.Id);
+      itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
   }

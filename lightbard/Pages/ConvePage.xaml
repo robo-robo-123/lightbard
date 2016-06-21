@@ -7,13 +7,28 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+  <Page.Resources>
+    <MenuFlyout x:Key="CommandMenuFlyout">
+      <MenuFlyoutItem x:Name="userInfoItem" Text="User Information" Tag="UserInfo" Click="userInfoCommand_Click"  />
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="conveItem" Text="Conversation" Tag="Conversation" Click="conveItem_Click"  />
+
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="{x:Bind ViewModel.Retweet}"
+                         />
+      <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="{x:Bind ViewModel.Like}" />
+      <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click" />
+    </MenuFlyout>
+  </Page.Resources>
+
+  <Grid>
   <ScrollViewer>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
       <StackPanel>
         <ListView x:Name="conveView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
       <ListView.ItemTemplate >
         <DataTemplate >
-          <local:TweetsList  />
+              <local:TweetsList FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped" />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
@@ -21,6 +36,8 @@
       <TextBlock x:Name="checkBlock"/>
       </StackPanel>
   </Grid>
+    
   </ScrollViewer>
-  
+
+  </Grid>
 </Page>

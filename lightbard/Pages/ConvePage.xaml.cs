@@ -27,6 +27,8 @@ namespace lightbard.Pages
   public sealed partial class ConvePage : Page
   {
     internal Tokens tokens;
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
+
     ObservableCollection<TweetClass.TweetInfo> tweet;
     Tweets data = new Tweets();
     TweetClass.TweetInfo item;
@@ -48,17 +50,10 @@ namespace lightbard.Pages
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-      //item = (TweetClass.TweetInfo)e.Parameter;
       var id  = (long?)e.Parameter;
-      //replyBox.Text = item.ToString();
-      //show();
-      //loadTweet(item.Id);
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
       conv(id);
-
     }
-
-
 
     private async void conv(long? Id)
     {
@@ -83,41 +78,71 @@ namespace lightbard.Pages
         testBlock.Text = ex.Message;
         return;
       }
-/*
-      if (status.ExtendedEntities.UserMentions[0].Id == null)
+
+    }
+
+    //リプライページに飛びます．
+    private void replyButton_Click(object sender, RoutedEventArgs e)
+    {
+
+        this.Frame.Navigate(typeof(ReplayPage), item);
+    }
+
+    private void tweetButton_Click(object sender, RoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(TweetPage));
+    }
+
+    //userinfo
+    private void userInfoCommand_Click(object sender, RoutedEventArgs e)
+    {
+
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+    private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+  }
+
+
+    private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+    private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      var item = this.conveView.SelectedItem as TweetClass.TweetInfo;
+      ViewModel.TweetIdSet(item.Id);
+      itemStock();
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    public void itemStock()
+    {
+      var item_test = this.conveView.SelectedItem as TweetClass.TweetInfo;
+      if (item_test == null)
       {
-        conveView.ItemsSource = tweet;
         return;
       }
       else
       {
-        
-        var rep_status = status.Entities.UserMentions[0].ScreenName;
-        //tweet.Add(new TweetClass.TweetInfo
-        //{
-        testBlock.Text = rep_status;
-        //}
- // );
+        item = this.conveView.SelectedItem as TweetClass.TweetInfo;
       }
-      */
-
     }
 
-    private async void loadTweet(long? Id)
+    private void conveItem_Click(object sender, RoutedEventArgs e)
     {
-      status = await tokens.Statuses.ShowAsync(id => Id);
-      var tweet = new ObservableCollection<TweetClass.TweetInfo>();
-      data.Addtweet(tweet, status);
-      //tweet = data.replytweetinfo2(status);
-      conveView.ItemsSource = tweet;
-      //show(status);
-
+      this.Frame.Navigate(typeof(ConvePage), item.Id);
     }
 
-    private void conButtom_Click(object sender, RoutedEventArgs e)
+    private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
-      //tweet = new List<TweetClass.TweetInfo>();
-      //conv(item.Id);
+      var item = this.conveView.SelectedItem as TweetClass.TweetInfo;
+      ViewModel.TweetIdSet(item.Id);
+      itemStock();
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
   }
 }

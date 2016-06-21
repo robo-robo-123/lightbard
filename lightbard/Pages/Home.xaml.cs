@@ -169,6 +169,23 @@ namespace lightbard.Pages
       });
     }
 
+    private void streamButton_Checked(object sender, RoutedEventArgs e)
+    {
+      //data.streamingtest(tweet);
+      streamingtest();
+    }
+
+    private void streamButton_Unchecked(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        disposable.Dispose();
+      }
+      catch (Exception ex)
+      { }
+    }
+
+
 
     //tweetをロードするのに使います
     private async void tweetLoad()
@@ -201,42 +218,6 @@ namespace lightbard.Pages
     {
       this.Frame.Navigate(typeof(TweetPage));
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-
-      /*
-    //お気に入り．
-    private void favoriteButton_Click(object sender, RoutedEventArgs e)
-    {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        data.like(item.Id);
-      }
-    }
-
-    //リツイート
-    private void retweetButton_Click(object sender, RoutedEventArgs e)
-    {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        data.retweet(item.Id);
-      }
-    }
-    */
 
     //userinfo
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
@@ -290,20 +271,7 @@ namespace lightbard.Pages
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 
-    private void streamButton_Checked(object sender, RoutedEventArgs e)
-    {
-      //data.streamingtest(tweet);
-      streamingtest();
-    }
 
-    private void streamButton_Unchecked(object sender, RoutedEventArgs e)
-    {
-      try { 
-      disposable.Dispose();
-      }
-      catch(Exception ex)
-      { }
-    }
   }
 
 }

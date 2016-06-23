@@ -39,7 +39,7 @@
        <Frame x:Name="tweetFrame" Margin="-12,0" />
     </PivotItem>
 -->
-      <PivotItem x:Name="mentionItem"   Tapped="mentionItem_Tapped">
+      <PivotItem x:Name="mentionItem" Tag="mention"  Tapped="mentionItem_Tapped">
         <PivotItem.Header>
           <Grid>
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE910;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0" />

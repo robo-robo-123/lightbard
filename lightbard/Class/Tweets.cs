@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Reactive.Subjects;
 using CoreTweet.Streaming;
 using System.Reactive.Linq;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace lightbard.Class
 {
@@ -27,6 +28,7 @@ namespace lightbard.Class
     List<TweetClass.UserInfo> userPro;
     IConnectableObservable<StreamingMessage> sm_stream;
     IDisposable disposable;
+    bool x = false;
     int tw_count;
 
     public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
@@ -73,21 +75,25 @@ namespace lightbard.Class
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
       try
       {
-        var x =  ViewModel.tweetCount();
+        var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        //tw_count = 100;
-        //Debug.WriteLine(tw_count);
-
-
-      //if (tw_count == ) tw_count = 100; 
-      foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => tw_count))
+      }
+      catch (Exception ex)
       {
-        Addtweet(tweet, status);
+        var tes = ex.Message;
+        toast("1" + tes);
       }
+      try
+      {
+        foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => tw_count))
+        {
+          Addtweet(tweet, status);
+        }
       }
-      catch
-    {
-
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("2" + tes);
       }
       return tweet;
     }
@@ -233,10 +239,54 @@ namespace lightbard.Class
      // });
     }
 
-
-    public void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
+    public bool xxx(Status status)
     {
-      string con = status.Text;
+      if (status.ExtendedEntities.Media == null)
+      { return false; }
+      else
+      { return true; }
+    }
+
+    public async void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
+    {
+     // string con = status.Text;
+      //BitmapImage tweetImage1 = new BitmapImage();
+
+/*
+      if (status.ExtendedEntities.Media == null)
+      { x = false; }
+      else
+      { x = true; }
+  */    
+  //status.ExtendedEntities.
+
+      /*
+      int media_num = status.ExtendedEntities.Media.Length;
+      for (int n = 0; n < media_num; n++)
+      {
+        var mediaurl = new Uri(status.ExtendedEntities.Media[n].MediaUrl);
+
+        BitmapImage imageSource = new BitmapImage(mediaurl);
+
+        switch (n)
+        {
+          case 0:
+            tweetImage1 = imageSource;
+            break;
+          case 1:
+            var tweetImage2 = imageSource;
+            break;
+          case 2:
+            var tweetImage3 = imageSource;
+            break;
+          case 3:
+            var tweetImage4 = imageSource;
+            break;
+
+        }
+      }
+      */
+
       if (status.RetweetedStatus != null)
       {
 
@@ -261,7 +311,8 @@ namespace lightbard.Class
 
           urls = status.RetweetedStatus.Entities.Urls,
           //ReplyId = status.RetweetedStatus.InReplyToStatusId
-
+          //image = tweetImage1
+          //image_check = xxx(status)
           //media = status.RetweetedStatus.ExtendedEntities.Media
           //arrayB.CopyTo(arrayA, 0)
           //media = status.RetweetedStatus.Entities.Media.CopyTo(media, 0)
@@ -294,6 +345,9 @@ namespace lightbard.Class
         }
         );
       }
+
+      
+
     }
 
     public void Addtweet2(ObservableCollection<Models.TweetInfo> tweet, Status status)
@@ -359,7 +413,7 @@ namespace lightbard.Class
     }
 
     //通知関連
-    private void toast(string text1)
+    public void toast(string text1)
     {
       // テンプレートのタイプを取得
       var template = ToastTemplateType.ToastText01;

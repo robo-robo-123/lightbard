@@ -26,8 +26,8 @@ namespace lightbard.Pages
     public HomeFrame()
     {
       this.InitializeComponent();
-      this.frame1.Navigate(typeof(Pages.MainFrame));
-      this.frame2.Navigate(typeof(Pages.MainFrame));
+      this.frame1.Navigate(typeof(Pages.MainFrame),false);
+      this.frame2.Navigate(typeof(Pages.MainFrame),true);
 
       SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
       {

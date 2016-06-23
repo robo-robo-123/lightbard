@@ -60,23 +60,12 @@ namespace lightbard.Pages
       tweetImage2.Source = null;
       tweetImage3.Source = null;
       tweetImage4.Source = null;
-
-      // var tweet = new List<TweetClass.TweetInfo>();
-      //var data = new Tweets();
-      // ReplyId = item.Id;
-      //replyBox.Text = item.ScreenName + " ";
-      //tweetIdを送ろう
-      // tweet = data.replytweetinfo(item);
-      //replyView.ItemsSource = tweet;
       try
       {
         if (status.Entities.Urls != null)
         {
-
           urlView.ItemsSource = status.Entities.Urls;
-          //testBlock.Text = item.urls.Length.ToString();
         }
-
       }
       catch { }
 
@@ -86,18 +75,9 @@ namespace lightbard.Pages
         {
           testBlock.Text = "";
           int media_num = status.ExtendedEntities.Media.Length;
-          //var media = item.media;
-          //int test = media.Length;
-          //testBlock.Text = media_num.ToString();
           for (int n = 0; n < media_num; n++)
           {
-
-            //var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
-            //BitmapImage image = new BitmapImage();
-            //image.SetSource(stream);
-
             var mediaurl = new Uri(status.ExtendedEntities.Media[n].MediaUrl);
-           // testBlock.Text += mediaurl;
 
             BitmapImage imageSource = new BitmapImage(mediaurl);
 
@@ -105,7 +85,6 @@ namespace lightbard.Pages
             {
               case 0:
                 tweetImage1.Source = imageSource;
-
                 break;
               case 1:
                 tweetImage2.Source = imageSource;
@@ -118,13 +97,10 @@ namespace lightbard.Pages
                 break;
 
             }
-
           }
         }
-
       }
       catch { }
-      //this.replyBlock.Text = "Reply to " + item.ScreenName;
 
     }
 
@@ -134,7 +110,6 @@ namespace lightbard.Pages
       {
         await tokens.Statuses.UpdateAsync(status => text, in_reply_to_status_id => replyid);
         reptweetState.Text = "ツイート成功";
-        //replyBox.Text = "";
         ReplyId = 0;
       }
       catch
@@ -145,20 +120,14 @@ namespace lightbard.Pages
 
     private void replyTweetButtom_Click(object sender, RoutedEventArgs e)
     {
-      //replyTweetAsync(replyBox.Text, ReplyId);
       this.tweetFrane.Visibility = Visibility.Visible;
       this.tweetFrane.Navigate(typeof(TweetPage), item);
     }
 
-
-
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
       item = (TweetClass.TweetInfo)e.Parameter;
-      //replyBox.Text = item.ToString();
-      //show();
       loadTweet(item.Id);
-
     }
 
     private async void loadTweet(long? Id)
@@ -168,12 +137,10 @@ namespace lightbard.Pages
       tweet = data.replytweetinfo2(status);
       replyView.ItemsSource = tweet;
       show(status);
-
     }
 
     private void HyperLinkButton_Click(object sender, RoutedEventArgs e)
     {
-
     }
 
     private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -195,9 +162,6 @@ namespace lightbard.Pages
 
       if (success)
       {
-        // 起動に成功した場合の処理。
-        // ブラウザは起動するがアプリも裏で動く
-        // reptweetState.Text = status.ExtendedEntities.Media[0].Url.ToString();
       }
       else
       {
@@ -350,7 +314,7 @@ namespace lightbard.Pages
       }
       */
     }
-
+      /*
     private async void conv(long? Id)
     {
       status2 = await tokens.Statuses.ShowAsync(id => Id);
@@ -376,7 +340,7 @@ namespace lightbard.Pages
       }
     }
 
-      /*
+
       private void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
       {
         var item = (TweetClass.TweetInfo)navigationParameter;

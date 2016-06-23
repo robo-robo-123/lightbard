@@ -38,6 +38,14 @@ namespace lightbard.Pages
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
       //this.timelineFrame.Navigate(typeof(Pages.Home));
+      var check = (bool)e.Parameter;
+
+      if (check==true)
+      {
+        var tp = this.rootPivot.Items.Where(i => (string)(((PivotItem)i).Tag) == (string)mentionItem.Tag).FirstOrDefault();
+        this.rootPivot.SelectedItem = tp;
+      }
+
     }
 
 

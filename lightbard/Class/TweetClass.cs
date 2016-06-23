@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CoreTweet;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace lightbard.Class
 {
@@ -28,7 +29,9 @@ namespace lightbard.Class
       public string RetweetCount { get; set; }
       public string FavoriteCount { get; set; }
       public MediaEntity[] media { get; set; }
+      public BitmapImage image { get; set; }
       public UrlEntity[] urls { get; set; }
+      public bool image_check { get; set; }
       public int media_number { get; set; }
       public int RelativeTime { get; set; }
       

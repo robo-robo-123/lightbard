@@ -43,33 +43,94 @@ namespace lightbard.Models
     public TweetInfoManager()
     {
       tokens = data.getToken();
-     // data.tweetload2(this.TweetInfos);
+      // data.tweetload2(this.TweetInfos);
+     // getTweet();
     }
 
-    
+    private long tweetId;
+
+    public long TweetId
+    {
+      get { return this.tweetId; }
+      set { this.SetProperty(ref this.tweetId, value); }
+    }
+
+
+
+    public async void getTweet()
+    {
+      try
+      {
+        var status = await tokens.Statuses.ShowAsync(id => this.TweetId);
+        this.TweetInfos.Clear();
+        data.replytweetinfo3(status, this.TweetInfos);
+        //data.tweetload2(this.TweetInfos);
+      }
+      catch (Exception ex)
+      {
+        this.TweetInfos.Add(new Models.TweetInfo
+        {
+          Text = ex.Message
+        }
+                );
+      }
+    }
+
+    public void getTimeline()
+    {
+      try
+      {
+        //var status = await tokens.Statuses.ShowAsync(id => this.TweetId);
+        // data.replytweetinfo3(status, this.TweetInfos);
+        data.tweetload2(this.TweetTimeline);
+      }
+      catch (Exception ex)
+      {
+        this.TweetTimeline.Add(new Models.TweetInfo
+        {
+          Text = ex.Message
+        }
+                );
+      }
+    }
+
+    public ObservableCollection<TweetInfo> getTimelineInfos()
+    {
+      //this.TweetInfos = new ObservableCollection<TweetInfo>();
+      //  data.tweetload2(this.TweetInfos);
+      getTimeline();
+      return this.TweetTimeline;
+    }
+
     public ObservableCollection<TweetInfo> getTweetInfos()
     {
       //this.TweetInfos = new ObservableCollection<TweetInfo>();
-    //  data.tweetload2(this.TweetInfos);
+      //  data.tweetload2(this.TweetInfos);
+      getTweet();
       return this.TweetInfos;
     }
-
+    /*
     private ObservableCollection<TweetInfo> tweetInfos;
     public ObservableCollection<TweetInfo> TweetInfos
     {
       get { return this.tweetInfos; }
       set { this.SetProperty(ref this.tweetInfos, value); }
     }
+    */
 
-    /*
         public ObservableCollection<TweetInfo> TweetInfos { get; set; } = new ObservableCollection<TweetInfo>()
         {
-
+       //   new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
         };
-        */
+
+    public ObservableCollection<TweetInfo> TweetTimeline { get; set; } = new ObservableCollection<TweetInfo>()
+    {
+      //   new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
+    };
+
   }
 
-  public class TweetLoad
+  public class TweetLoad : Common.BindableBase
   {
     public static TweetLoad Instance { get; } = new TweetLoad();
 

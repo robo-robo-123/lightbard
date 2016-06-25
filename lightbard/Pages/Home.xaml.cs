@@ -46,7 +46,8 @@ namespace lightbard.Pages
     IDisposable disposable;
 
     public long? UserId { get; set; }
-    TweetClass.TweetInfo item;
+    //TweetClass.TweetInfo item;
+    Models.TweetInfo item;
     public long? ReplyId { get; set; }
 
     public string userId { get; set; }
@@ -61,7 +62,8 @@ namespace lightbard.Pages
       this.InitializeComponent();
 
       tokens = data.getToken();
-        tweetLoad();
+      //tweetLoad();
+      ViewModel2.GetTimelineInfos();
 
       var settings = ApplicationData.Current.RoamingSettings;
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
@@ -72,8 +74,10 @@ namespace lightbard.Pages
     //page読み込み時
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-      item = (TweetClass.TweetInfo)e.Parameter;
+      item = (Models.TweetInfo)e.Parameter;
+      //item = (TweetClass.TweetInfo)e.Parameter;
     }
+
 
     //ストリーミング
     private async void streamingtest()
@@ -203,9 +207,12 @@ namespace lightbard.Pages
     //ロードボタンです．
     private void reloadButton_Click(object sender, RoutedEventArgs e)
     {
-        tweetLoad();
-     // streamingtest();
+     // ViewModel2.GetTimelineInfos();
+
+         tweetLoad();
+      // streamingtest();
     }
+
 
     //リプライページに飛びます．
     private void replyButton_Click(object sender, RoutedEventArgs e)
@@ -239,8 +246,10 @@ namespace lightbard.Pages
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      //var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      item = this.listView.SelectedItem as Models.TweetInfo;
       ViewModel.TweetIdSet(item.Id);
+      ViewModel2.TweetIdSet(item.Id);
       itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
@@ -254,7 +263,8 @@ namespace lightbard.Pages
       }
       else
       {
-        item = this.listView.SelectedItem as TweetClass.TweetInfo;
+        //item = this.listView.SelectedItem as TweetClass.TweetInfo;
+        item = this.listView.SelectedItem as Models.TweetInfo;
       }
     }
 
@@ -265,8 +275,10 @@ namespace lightbard.Pages
 
     private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      item = this.listView.SelectedItem as Models.TweetInfo;
+      //var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       ViewModel.TweetIdSet(item.Id);
+      ViewModel2.TweetIdSet(item.Id);
       itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }

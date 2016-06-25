@@ -25,7 +25,7 @@
           <Image Source="{Binding RetweetUserProfileImageUrl}" Stretch="Uniform" Margin="10,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="30" MaxHeight="34"/>
         </StackPanel>
       </StackPanel>
-      <TextBlock Text="画像あります" Visibility="{Binding image_check, Converter={StaticResource True2Visibility}}" />
+      <!-- <TextBlock Text="画像あります" Visibility="{Binding image_check, Converter={StaticResource True2Visibility}}" /> -->
       <RelativePanel>
         <Image x:Name="tweetImage1" Width="200" Source="{Binding image}"  Margin="5,5,5,10"/>
 

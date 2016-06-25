@@ -29,19 +29,22 @@ namespace lightbard.Pages
   {
 
     internal Tokens tokens;
-    TweetClass.TweetInfo item;
+    //TweetClass.TweetInfo item;
+    Models.TweetInfo item;
     Tweets data = new Tweets();
+    MediaEntity[] image_entity;
     public long? ReplyId { get; set; }
     public Status status { get; set; }
     public Status status2 { get; set; }
     ObservableCollection<TweetClass.TweetInfo> convetweet;
+    public ViewModels.TweetPageViewModel ViewModel2 { get; } = new ViewModels.TweetPageViewModel();
 
     public ReplayPage()
     {
       this.InitializeComponent();
       tokens = data.getToken();
 
-      SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
+    SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
       {
         if (Frame.CanGoBack)
         {
@@ -52,6 +55,7 @@ namespace lightbard.Pages
 
     }
 
+      //画像表示
     private void show(Status status)
     {
       reptweetState.Text = "";
@@ -73,6 +77,7 @@ namespace lightbard.Pages
       {
         if (status.ExtendedEntities.Media != null)
         {
+          image_entity = status.ExtendedEntities.Media;
           testBlock.Text = "";
           int media_num = status.ExtendedEntities.Media.Length;
           for (int n = 0; n < media_num; n++)
@@ -104,6 +109,7 @@ namespace lightbard.Pages
 
     }
 
+    /*
     private async void replyTweetAsync(string text, long? replyid)
     {
       try
@@ -117,6 +123,7 @@ namespace lightbard.Pages
         reptweetState.Text = "ツイート失敗";
       }
     }
+    */
 
     private void replyTweetButtom_Click(object sender, RoutedEventArgs e)
     {
@@ -124,20 +131,38 @@ namespace lightbard.Pages
       this.tweetFrane.Navigate(typeof(TweetPage), item);
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    protected async override void OnNavigatedTo(NavigationEventArgs e)
     {
-      item = (TweetClass.TweetInfo)e.Parameter;
-      loadTweet(item.Id);
+      //item = (TweetClass.TweetInfo)e.Parameter;
+      item = (Models.TweetInfo)e.Parameter;
+      //data.toast(item.Id.ToString());
+
+      //loadTweet(item.Id);
+      status = await tokens.Statuses.ShowAsync(id => item.Id);
+      show(status);
+
+
+      ViewModel2.GetTweetInfos();
     }
 
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+      base.OnNavigatedFrom(e);
+      this.tweetFrane.Visibility = Visibility.Collapsed;
+
+    }
+
+    /*
     private async void loadTweet(long? Id)
     {
+
       status = await tokens.Statuses.ShowAsync(id => Id);
-      var tweet = new ObservableCollection<TweetClass.TweetInfo>();
-      tweet = data.replytweetinfo2(status);
-      replyView.ItemsSource = tweet;
+      //var tweet = new ObservableCollection<TweetClass.TweetInfo>();
+      //tweet = data.replytweetinfo2(status);
+      //replyView.ItemsSource = tweet;
       show(status);
     }
+    */
 
     private void HyperLinkButton_Click(object sender, RoutedEventArgs e)
     {
@@ -295,24 +320,6 @@ namespace lightbard.Pages
     private void conveButton_Click(object sender, RoutedEventArgs e)
     {
       this.Frame.Navigate(typeof(ConvePage), item.Id);
-
-      /*
-      convetweet = new List<TweetClass.TweetInfo>();
-      conv(item.Id);
-      */
-      /*
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      if (item == null)
-      {
-        return;
-      }
-      else
-      {
-        var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
-        this.Frame.Navigate(typeof(ConvePage), item_send);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
-      }
-      */
     }
       /*
     private async void conv(long? Id)

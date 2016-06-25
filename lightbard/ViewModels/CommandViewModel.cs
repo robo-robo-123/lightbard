@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using lightbard.Common;
 using lightbard.Models;
+using System.ComponentModel;
 
 namespace lightbard.ViewModels
 {
@@ -82,23 +83,50 @@ namespace lightbard.ViewModels
 
   }
 
-  public class TweetPageViewModel : Common.BindableBase
+  public class TweetPageViewModel : Common.BindableBase//, IDisposable
   {
     private Models.TweetLoad Model { get; } = Models.TweetLoad.Instance;
 
-    //  public ObservableCollection<TweetInfo> TweetInfos { get; set; }
+    // public ReadOnlyObservableCollection<TweetInfo> TweetInfos { get; set; }
+    // public ObservableCollection<TweetInfo> TweetInfos { get; set; }
 
-    public ObservableCollection<TweetInfo> TweetInfos
+    
+  public ObservableCollection<TweetInfo> TweetInfos
+  {
+    get { return this.Model.TweetInfoManager.TweetInfos; }
+    set { this.Model.TweetInfoManager.TweetInfos = value; }
+  }
+
+    public ObservableCollection<TweetInfo> TweetTimeline
     {
-      get { return this.Model.TweetInfoManager.TweetInfos; }
-      set { this.Model.TweetInfoManager.TweetInfos = value; }
+      get { return this.Model.TweetInfoManager.TweetTimeline; }
+      set { this.Model.TweetInfoManager.TweetTimeline = value; }
+    }
+
+    public void TweetIdSet(long value)
+    {
+      this.Model.TweetInfoManager.TweetId = value;
+    }
+
+
+    public long TweetId
+    {
+      get { return this.TweetId; }
+      set { this.Model.TweetInfoManager.TweetId = value; }
     }
 
     public TweetPageViewModel()
     {
-      //this.TweetInfos = new ObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
-      this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+      this.Model.PropertyChanged += this.TweetPageViewModel_PropatyChanged;
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      //this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }
+
+    private void TweetPageViewModel_PropatyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      this.OnPropertyChanged(e.PropertyName);
+    }
+
     /*
     public void GetTweetInfos()
     {
@@ -106,13 +134,28 @@ namespace lightbard.ViewModels
     }
     */
 
-
+    public void GetTweetInfos()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+      //this.Model.PropertyChanged += this.TweetPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    public void GetTimelineInfos()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.TweetTimeline.Clear();
+      this.TweetTimeline = this.Model.TweetInfoManager.getTimelineInfos();
+      this.Model.PropertyChanged += this.TweetPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    /*
     public void GetTweetInfos()
     {
       //this.TweetInfos = new ObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
-      this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+     // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }
-
+    */
 
 
   }

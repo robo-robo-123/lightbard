@@ -32,7 +32,8 @@
 
       
       <StackPanel x:Name="replyStackPanel" >
-        <ListView x:Name="replyView"  Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White" MaxHeight="200"  SelectionMode="Single">
+            <ListView x:Name="replyView"  Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel2.TweetInfos}" Foreground="White" MaxHeight="200"  SelectionMode="Single">
+              <!--<ListView x:Name="replyView"  Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White" MaxHeight="200"  SelectionMode="Single">-->
         <ListView.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">

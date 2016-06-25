@@ -50,13 +50,14 @@ namespace lightbard.Pages
     {
       this.InitializeComponent();
       tokens = data.getToken();
-      mentionLoad();
+
       var settings = ApplicationData.Current.RoamingSettings;
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
       item = (TweetClass.TweetInfo)e.Parameter;
+      mentionLoad();
     }
 
     //tweetをロードするのに使います

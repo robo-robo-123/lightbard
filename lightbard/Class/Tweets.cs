@@ -542,5 +542,31 @@ namespace lightbard.Class
 
     }
 
+    public void replytweetinfo3(Status item, ObservableCollection<Models.TweetInfo> reply)
+    {
+      //情報を引き出し、ここで画像を取得しよう。
+      try
+      {
+        reply.Add(new Models.TweetInfo
+        {
+
+          UserName = item.User.Name,
+          UserId = item.User.Id,
+          ScreenName = item.User.ScreenName,
+          ProfileImageUrl = item.User.ProfileImageUrlHttps,
+          Text = System.Net.WebUtility.HtmlDecode(item.Text),
+          Date = item.CreatedAt.LocalDateTime.ToString(),
+          Via = item.Source,
+          FavoriteCount = item.FavoriteCount.ToString(),
+          RetweetCount = item.RetweetCount.ToString(),
+          //urls = item.Entities.Urls,
+          //media = item.ExtendedEntities.Media
+        }
+        );
+      }
+      catch
+      { }
+
+    }
   }
 }

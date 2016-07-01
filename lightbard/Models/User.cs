@@ -115,16 +115,16 @@ namespace lightbard.Models
       }
     }
 
-    public void getFllowList()
+    public void getFollowerList()
     {
       try
       {
-        this.UserFollows.Clear();
-        data.userfollowload(this.UserFollows, this.UserId);
+        this.UserFollowers.Clear();
+        data.userfollowerload(this.UserFollowers, this.UserId);
       }
       catch (Exception ex)
       {
-        this.UserFollows.Add(new Models.UserInfo
+        this.UserFollowers.Add(new Models.UserInfo
         {
           Text = ex.Message
         }
@@ -137,7 +137,8 @@ namespace lightbard.Models
       try
       {
         this.UserFriends.Clear();
-//        data.likeload(this.UserFriends);
+        data.userfriendload(this.UserFriends, this.UserId);
+        //        data.likeload(this.UserFriends);
       }
       catch (Exception ex)
       {
@@ -173,10 +174,10 @@ namespace lightbard.Models
       return this.LikeLists;
     }
 
-    public ObservableCollection<UserInfo> getFllowLists()
+    public ObservableCollection<UserInfo> getFllowerLists()
     {
-      getFllowList();
-      return this.UserFollows;
+      getFollowerList();
+      return this.UserFollowers;
     }
 
     public ObservableCollection<UserInfo> getFriendLists()
@@ -203,7 +204,7 @@ namespace lightbard.Models
          new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
     };
 
-    public ObservableCollection<UserInfo> UserFollows { get; set; } = new ObservableCollection<UserInfo>()
+    public ObservableCollection<UserInfo> UserFollowers { get; set; } = new ObservableCollection<UserInfo>()
     {
          new UserInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
     };

@@ -54,7 +54,7 @@ namespace lightbard.Pages
       ViewModel3.GetUserInfos();
       ViewModel3.GetUserTweetLists();
       ViewModel3.GetUserLikeLists();
-      ViewModel3.GetUserFollowLists();
+      ViewModel3.GetUserFollowerLists();
       ViewModel3.GetUserFriendLists();
       //this.tweetFrame.Navigate(typeof(Home));
     }

@@ -201,7 +201,7 @@
                                                Text="フォロー"
                                                TextAlignment="Center" />
                 </PivotItem.Header>
-            <ListView x:Name="followView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserFollows}"  SelectionMode="Single" Margin="0,0,0,25"  >
+            <ListView x:Name="followView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserFriends}"  SelectionMode="Single" Margin="0,0,0,25"  >
               <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
               <ListView.ItemTemplate >
                 <DataTemplate >
@@ -225,7 +225,7 @@
                                                Text="フォロワー"
                                                TextAlignment="Center" />
             </PivotItem.Header>
-            <ListView x:Name="friendView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserFriends}"  SelectionMode="Single" Margin="0,0,0,25"  >
+            <ListView x:Name="friendView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserFollowers}"  SelectionMode="Single" Margin="0,0,0,25"  >
               <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
               <ListView.ItemTemplate >
                 <DataTemplate >

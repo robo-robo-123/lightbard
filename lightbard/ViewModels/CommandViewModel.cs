@@ -205,10 +205,10 @@ namespace lightbard.ViewModels
       set { this.Model.UserInfoManager.LikeLists = value; }
     }
 
-    public ObservableCollection<UserInfo> UserFollows
+    public ObservableCollection<UserInfo> UserFollowers
     {
-      get { return this.Model.UserInfoManager.UserFollows; }
-      set { this.Model.UserInfoManager.UserFollows = value; }
+      get { return this.Model.UserInfoManager.UserFollowers; }
+      set { this.Model.UserInfoManager.UserFollowers = value; }
     }
 
     public ObservableCollection<UserInfo> UserFriends
@@ -282,11 +282,11 @@ namespace lightbard.ViewModels
       // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }
 
-    public void GetUserFollowLists()
+    public void GetUserFollowerLists()
     {
       //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
-      this.UserFollows.Clear();
-      this.UserFollows = this.Model.UserInfoManager.getFllowLists();
+      this.UserFollowers.Clear();
+      this.UserFollowers = this.Model.UserInfoManager.getFllowerLists();
       this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
       // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }

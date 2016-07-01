@@ -105,7 +105,7 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString());
+        toast(tw_count.ToString()+"timeline");
       }
       catch (Exception ex)
       {
@@ -157,7 +157,7 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString());
+        toast(tw_count.ToString()+"like");
       }
       catch (Exception ex)
       {
@@ -184,7 +184,7 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString());
+        toast(tw_count.ToString()+"user timeline");
       }
       catch (Exception ex)
       {
@@ -205,13 +205,40 @@ namespace lightbard.Class
       }
     }
 
-    public async void userfollowload(ObservableCollection<Models.UserInfo> tweet, long? UserId)
+    public async void userfollowerload(ObservableCollection<Models.UserInfo> tweet, long? UserId)
     {
       try
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString());
+        toast(tw_count.ToString()+"fllower");
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("1" + tes);
+      }
+      try
+      {
+        foreach (var status in await tokens.Followers.ListAsync(user_id => UserId, count => tw_count))
+        {
+          AddInfo2(tweet, status);
+        }
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("2" + tes);
+      }
+    }
+
+    public async void userfriendload(ObservableCollection<Models.UserInfo> tweet, long? UserId)
+    {
+      try
+      {
+        var x = ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+        toast(tw_count.ToString()+"friend");
       }
       catch (Exception ex)
       {

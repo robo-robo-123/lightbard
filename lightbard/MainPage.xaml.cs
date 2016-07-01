@@ -36,8 +36,8 @@ namespace lightbard
       var reg = new lightbard.Class.ClientData();
       tokens = data.getToken();
       nameChange();
-      this.testFrame.Navigate(typeof(Pages.HomeFrame));
-      //this.testFrame.Navigate(typeof(Pages.MainFrame));
+      //this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      this.testFrame.Navigate(typeof(Pages.MainFrame));
 
 
       SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
@@ -84,14 +84,14 @@ namespace lightbard
     {
       // 適切な移動先のページに移動し、新しいページを構成します。
       // このとき、必要な情報をナビゲーション・パラメータとして渡します
-      this.testFrame.Navigate(typeof(Pages.HomeFrame));
-      //this.testFrame.Navigate(typeof(Pages.MainFrame));
+      //this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      this.testFrame.Navigate(typeof(Pages.MainFrame));
     }
 
     private void Grid_Tapped_1(object sender, TappedRoutedEventArgs e)
     {
-      this.testFrame.Navigate(typeof(Pages.HomeFrame));
-      //this.testFrame.Navigate(typeof(Pages.MainFrame));
+      //this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      this.testFrame.Navigate(typeof(Pages.MainFrame));
 
     }
 

@@ -27,11 +27,14 @@
       </StackPanel>
       <!-- <TextBlock Text="画像あります" Visibility="{Binding image_check, Converter={StaticResource True2Visibility}}" /> -->
       <RelativePanel>
-        <Image x:Name="tweetImage1" Width="200" Source="{Binding image}"  Margin="5,5,5,10"/>
-
+        <Image x:Name="tweetImage1" Width="200"  Margin="5,5,5,10"/>
+        <Image x:Name="tweetImage2" Width="200" Grid.Column="1"   Margin="5,5,5,10" RelativePanel.RightOf="tweetImage1"/>
+        <Image x:Name="tweetImage3" Width="200" Grid.Column="2"  Margin="5,5,5,10" RelativePanel.RightOf="tweetImage2"/>
+        <Image x:Name="tweetImage4" Width="200"  Grid.Column="3"  Margin="5,5,5,10" RelativePanel.RightOf="tweetImage3"/>
+        <!--        <Image x:Name="tweetImage1" Width="200" Source="{Binding image}"  Margin="5,5,5,10"/>
         <Image x:Name="tweetImage2" Width="200" Grid.Column="1" Source="{Binding image}"  Margin="5,5,5,10" RelativePanel.RightOf="tweetImage1"/>
         <Image x:Name="tweetImage3" Width="200" Grid.Column="2" Source="{Binding image}" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage2"/>
-        <Image x:Name="tweetImage4" Width="200"  Grid.Column="3" Source="{Binding image}" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage3"/>
+        <Image x:Name="tweetImage4" Width="200"  Grid.Column="3" Source="{Binding image}" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage3"/>-->
       </RelativePanel>
     </StackPanel>
   </Grid>

@@ -7,6 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+  <Page.Resources>
+    <MenuFlyout x:Key="CommandMenuFlyout">
+      <MenuFlyoutItem x:Name="userInfoItem" Text="User Information" Tag="UserInfo" Click="userInfoCommand_Click"  />
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="conveItem" Text="Conversation" Tag="Conversation" Click="conveItem_Click"  />
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="{x:Bind ViewModel.Retweet}" />
+      <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="{x:Bind ViewModel.Like}" />
+      <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click" />
+    </MenuFlyout>
+  </Page.Resources>
+
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -15,17 +27,17 @@
 
           <ScrollViewer>
         <StackPanel>
-          <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Top">
+          <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
             <CommandBar.Content>
-              <TextBox x:Name="serchBox2" Width="150" />
+              <TextBox x:Name="serchBox2" Width="150" Height="49" />
             </CommandBar.Content>
-              <AppBarButton x:Name="tweetButton"  Label="Tweet Search" Icon="Edit" Click="searchButtom_Click"/>
+              <AppBarButton x:Name="tweetButton"  Label="Tweet Search" Icon="Find" Click="searchButtom_Click"/>
             </CommandBar>
 
             <ListView x:Name="searchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
           <ListView.ItemTemplate >
             <DataTemplate >
-              <local:TweetsList  />
+                  <local:TweetsList  FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped"/>
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>

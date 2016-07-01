@@ -23,7 +23,7 @@ namespace lightbard.Class
   {
     
     internal Tokens tokens;
-    ObservableCollection<TweetClass.TweetInfo> tweet;
+    ObservableCollection<Models.TweetInfo> tweet;
     ObservableCollection<TweetClass.TweetInfo> reply;
     List<TweetClass.UserInfo> userPro;
     IConnectableObservable<StreamingMessage> sm_stream;
@@ -36,6 +36,7 @@ namespace lightbard.Class
     public Tweets()
     {
       SaveKey();
+      //ViewModel.Load();
     }
 
     private void SaveKey()
@@ -70,9 +71,9 @@ namespace lightbard.Class
     }
 
     //Tweet投稿関連
-    public async Task<ObservableCollection<TweetClass.TweetInfo>> tweetload()
+    public async Task<ObservableCollection<Models.TweetInfo>> tweetload()
     {
-      tweet = new ObservableCollection<TweetClass.TweetInfo>();
+      tweet = new ObservableCollection<Models.TweetInfo>();
       try
       {
         var x = ViewModel.tweetCount();
@@ -104,6 +105,7 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
+        toast(tw_count.ToString());
       }
       catch (Exception ex)
       {
@@ -125,17 +127,22 @@ namespace lightbard.Class
     }
 
 
-    public async Task<ObservableCollection<TweetClass.TweetInfo>> mentionload()
+    public async Task<ObservableCollection<Models.TweetInfo>> mentionload()
     {
-      tweet = new ObservableCollection<TweetClass.TweetInfo>();
-      var value = ApplicationData.Current.RoamingSettings;
+      tweet = new ObservableCollection<Models.TweetInfo>();
+      //var value = ApplicationData.Current.RoamingSettings;
       try
       {
-       // tw_count = (int)value.Values["tweetsCount"];
-        tw_count = 100;
+        // tw_count = (int)value.Values["tweetsCount"];
+        var x = ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+        toast(tw_count.ToString());
       }
-      catch
-      { }
+      catch(Exception ex)
+      {
+        var tes = ex.Message;
+        toast("1" + tes);
+      }
       foreach (var status in await tokens.Statuses.MentionsTimelineAsync(count => tw_count))
       {
         Addtweet(tweet, status);
@@ -143,6 +150,87 @@ namespace lightbard.Class
       return tweet;
     }
 
+
+    public async void likeload(ObservableCollection<Models.TweetInfo> tweet, long? UserId)
+    {
+      try
+      {
+        var x = ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+        toast(tw_count.ToString());
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("1" + tes);
+      }
+      try
+      {
+        foreach (var status in await tokens.Favorites.ListAsync(count => tw_count))
+        {
+          Addtweet2(tweet, status);
+        }
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("2" + tes);
+      }
+    }
+
+    public async void usertweetload(ObservableCollection<Models.TweetInfo> tweet, long? UserId)
+    {
+      try
+      {
+        var x = ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+        toast(tw_count.ToString());
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("1" + tes);
+      }
+      try
+      {
+        foreach (var status in await tokens.Statuses.UserTimelineAsync(user_id => UserId, count => tw_count))
+        {
+          Addtweet2(tweet, status);
+        }
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("2" + tes);
+      }
+    }
+
+    public async void userfollowload(ObservableCollection<Models.UserInfo> tweet, long? UserId)
+    {
+      try
+      {
+        var x = ViewModel.tweetCount();
+        tw_count = int.Parse(x);
+        toast(tw_count.ToString());
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("1" + tes);
+      }
+      try
+      {
+        foreach (var status in await tokens.Friends.ListAsync(user_id => UserId, count => tw_count))
+        {
+          AddInfo2(tweet, status);
+        }
+      }
+      catch (Exception ex)
+      {
+        var tes = ex.Message;
+        toast("2" + tes);
+      }
+    }
 
     //ストリーミング
     public async void streamingtest(ObservableCollection<TweetClass.TweetInfo> tweet)
@@ -156,6 +244,7 @@ namespace lightbard.Class
         //testBlock.Text = "接続中です";
         var xx = ViewModel.streamCount();
         int tw_count = int.Parse(xx);
+        toast(tw_count.ToString());
         await Task.Delay(tw_count * 600);
         disposable.Dispose();
         //streamButton.IsChecked = false;
@@ -247,7 +336,7 @@ namespace lightbard.Class
       { return true; }
     }
 
-    public async void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
+    public async void Addtweet(ObservableCollection<Models.TweetInfo> tweet, Status status)
     {
      // string con = status.Text;
       //BitmapImage tweetImage1 = new BitmapImage();
@@ -290,7 +379,7 @@ namespace lightbard.Class
       if (status.RetweetedStatus != null)
       {
 
-        tweet.Add(new TweetClass.TweetInfo
+        tweet.Add(new Models.TweetInfo
         {
           UserName = status.RetweetedStatus.User.Name + " ",
           UserId = status.RetweetedStatus.User.Id,
@@ -323,7 +412,7 @@ namespace lightbard.Class
       else
       {
 
-        tweet.Add(new TweetClass.TweetInfo
+        tweet.Add(new Models.TweetInfo
         {
           UserName = status.User.Name + " ",
           UserId = status.User.Id,
@@ -488,6 +577,23 @@ namespace lightbard.Class
 );
     }
 
+    public void AddInfo2(ObservableCollection<Models.UserInfo> userPro, CoreTweet.User user)
+    {
+      userPro.Add(new Models.UserInfo
+      {
+        UserName = user.Name,
+        UserId = user.Id,
+        ScreenName = "@" + user.ScreenName,
+        ProfileImageUrl = user.ProfileImageUrlHttps,
+        FollowCount = user.FollowersCount,
+        FavCount = user.FavouritesCount,
+        FollowerCount = user.FriendsCount,
+        Prof = user.Description
+
+      }
+);
+    }
+
     public ObservableCollection<TweetClass.TweetInfo> replytweetinfo(TweetClass.TweetInfo item)
     {
       //情報を引き出し、ここで画像を取得しよう。
@@ -568,5 +674,86 @@ namespace lightbard.Class
       { }
 
     }
+
+    public void tweetinfo(UserResponse status, ObservableCollection<Models.TweetInfo> reply)
+    {
+      //情報を引き出し、ここで画像を取得しよう。
+      try
+      {
+        reply.Add(new Models.TweetInfo
+        {
+          UserName = status.Name + " ",
+          UserId = status.Id,
+          ScreenName = "@" + status.ScreenName,
+          ProfileImageUrl = status.ProfileImageUrlHttps,
+          Text = System.Net.WebUtility.HtmlDecode(status.Status.Text),
+          Date = status.CreatedAt.LocalDateTime.ToString(),
+          //Date = status.RetweetedStatus.CreatedAt.ToString(),
+          Id = status.Status.Id,
+          //retUser = status.RetweetedStatus,
+          //Url = m.Value.ToString(),
+          FavoriteCount = ", Like: " + status.Status.FavoriteCount.ToString(),
+          RetweetCount = "Retweet: " + status.Status.RetweetCount.ToString(),
+          Via = status.Status.Source,
+          RetweetUser = null,
+          urls = status.Status.Entities.Urls,
+          //ReplyId = status.InReplyToStatusId
+        }
+        );
+      }
+      catch(Exception ex)
+      {
+        toast(ex.Message);
+      }
+
+    }
+
+    /*
+    public void userinfo(UserResponse showedUser, ObservableCollection<Models.UserInfo> user)
+    {
+      //情報を引き出し、ここで画像を取得しよう。
+      try
+      {
+        user.Add(new Models.UserInfo
+        {
+          UserName = showedUser.Name,
+          UserId = showedUser.Id,
+          ScreenName = "@" + showedUser.ScreenName,
+          ProfileImageUrl = showedUser.ProfileImageUrlHttps,
+          ProfileBackgroundImageUrl = showedUser.ProfileBackgroundImageUrlHttps,
+          FollowCount = showedUser.FollowersCount,
+          FavCount = showedUser.FavouritesCount,
+          FollowerCount = showedUser.FriendsCount,
+          Prof = showedUser.Description
+
+        }
+);
+      }
+      catch
+      { }
+
+    }
+*/
+    public void userinfo(UserResponse showedUser, Models.UserInfo user)
+    {
+      //情報を引き出し、ここで画像を取得しよう。
+      try
+      {
+        user.UserName = showedUser.Name;
+        user.UserId = showedUser.Id;
+        user.ScreenName = "@" + showedUser.ScreenName;
+        user.ProfileImageUrl = showedUser.ProfileImageUrlHttps;
+        user.ProfileBackgroundImageUrl = showedUser.ProfileBackgroundImageUrlHttps;
+        user.FollowCount = showedUser.FollowersCount;
+        user.FavCount = showedUser.FavouritesCount;
+        user.FollowerCount = showedUser.FriendsCount;
+        user.Prof = showedUser.Description;
+        user.Place = showedUser.ProfileLocation.Name;
+      }
+      catch
+      { }
+
+    }
+
   }
 }

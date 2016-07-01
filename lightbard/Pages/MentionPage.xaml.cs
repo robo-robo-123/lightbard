@@ -36,7 +36,7 @@ namespace lightbard.Pages
 
     ObservableCollection<TweetClass.TweetInfo> tweet;
     public long? UserId { get; set; }
-    TweetClass.TweetInfo item;
+    Models.TweetInfo item;
     public long? ReplyId { get; set; }
 
     public string userId { get; set; }
@@ -56,14 +56,14 @@ namespace lightbard.Pages
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-      item = (TweetClass.TweetInfo)e.Parameter;
+      item = (Models.TweetInfo)e.Parameter;
       mentionLoad();
     }
 
     //tweetをロードするのに使います
     private async void mentionLoad()
     {
-      Task<ObservableCollection<TweetClass.TweetInfo>> mentionload = data.mentionload();
+      Task<ObservableCollection<Models.TweetInfo>> mentionload = data.mentionload();
       try {
         this.listView.ItemsSource = await mentionload;
       }
@@ -111,7 +111,7 @@ namespace lightbard.Pages
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      item = this.listView.SelectedItem as Models.TweetInfo;
       ViewModel.TweetIdSet(item.Id);
       itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
@@ -126,7 +126,7 @@ namespace lightbard.Pages
       }
       else
       {
-        item = this.listView.SelectedItem as TweetClass.TweetInfo;
+        item = this.listView.SelectedItem as Models.TweetInfo;
       }
     }
 
@@ -137,7 +137,7 @@ namespace lightbard.Pages
 
     private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
-      var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      item = this.listView.SelectedItem as Models.TweetInfo;
       ViewModel.TweetIdSet(item.Id);
       itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);

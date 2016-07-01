@@ -28,8 +28,11 @@ namespace lightbard.Pages
   {
 
     internal Tokens tokens;
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
+    public ViewModels.TweetPageViewModel ViewModel2 { get; } = new ViewModels.TweetPageViewModel();
 
-    ObservableCollection<TweetClass.TweetInfo> tweet;
+    ObservableCollection<Models.TweetInfo> tweet;
+    Models.TweetInfo item;
     List<TweetClass.TweetInfo> userTweet;
 
     List<TweetClass.UserInfo> user;
@@ -51,7 +54,7 @@ namespace lightbard.Pages
     {
       if (tokens != null)
       {
-        tweet = new ObservableCollection<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<Models.TweetInfo>();
         try
         {
           string search_word = serchBox2.Text;
@@ -133,6 +136,65 @@ namespace lightbard.Pages
           //          viewTextBox.Text = ex.Source;
         }
       }
+    }
+
+    //リプライページに飛びます．
+    private void replyButton_Click(object sender, RoutedEventArgs e)
+    {
+
+      this.Frame.Navigate(typeof(ReplayPage), item);
+    }
+
+    private void tweetButton_Click(object sender, RoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(TweetPage));
+    }
+
+    //userinfo
+    private void userInfoCommand_Click(object sender, RoutedEventArgs e)
+    {
+
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+    private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+
+    private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item.UserId);
+    }
+
+    private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      //var item = this.listView.SelectedItem as TweetClass.TweetInfo;
+      item = this.searchView.SelectedItem as Models.TweetInfo;
+      ViewModel.TweetIdSet(item.Id);
+      ViewModel2.TweetIdSet(item.Id);
+      itemStock();
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    public void itemStock()
+    {
+      var item_test = this.searchView.SelectedItem as TweetClass.TweetInfo;
+      if (item_test == null)
+      {
+        return;
+      }
+      else
+      {
+        //item = this.listView.SelectedItem as TweetClass.TweetInfo;
+        item = this.searchView.SelectedItem as Models.TweetInfo;
+      }
+    }
+
+    private void conveItem_Click(object sender, RoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(ConvePage), item.Id);
     }
 
   }

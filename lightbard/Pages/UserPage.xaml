@@ -51,17 +51,17 @@
   
   <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
     <Grid >
-         
+
     <Grid.RowDefinitions>
       <RowDefinition Height="5*" />
       <RowDefinition Height="30" />
       <RowDefinition Height="10*" />
 
     </Grid.RowDefinitions>
-
+    
     <!--<StackPanel>-->
-    <ListView x:Name="userInfoView" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White">
-      <ListView.ItemTemplate>
+    <ListView x:Name="userInfoView" VerticalAlignment="Stretch" Header="{x:Bind ViewModel3.UserInfos}" Foreground="White">
+
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
             <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
@@ -80,7 +80,7 @@
             </StackPanel>
           </StackPanel>
         </DataTemplate>
-      </ListView.ItemTemplate>
+
 
     </ListView>
 

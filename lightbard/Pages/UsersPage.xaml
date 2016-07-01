@@ -1,0 +1,245 @@
+﻿<Page
+    x:Class="lightbard.Pages.UsersPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:lightbard"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+  <Page.Resources>
+    <DataTemplate x:Key="profview">
+      <StackPanel x:Name="infoView" >
+        <Image Height="160"
+                           VerticalAlignment="Top"
+                           Source="{Binding ProfileBackgroundImageUrl}"
+                           Stretch="UniformToFill" />
+        <StackPanel Margin="10,0">
+          <Grid>
+            <Border Width="112"
+                                    Height="112"
+                                    Margin="0,-56,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    BorderBrush="White"
+                                    BorderThickness="2.5">
+              <Image Width="108"
+                                       Height="108"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Source="{Binding ProfileImageUrl}" />
+            </Border>
+            <StackPanel Margin="10"
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal">
+              <Button Height="40"
+                                        Margin="5,0"
+                                        Background="White"
+                                        Content="&#xE71D;"
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                        FontSize="20"
+                                        Foreground="DarkGray" />
+              <Button Height="40"
+                                        Margin="5,0"
+                                        Background="White"
+                                        Content="&#xE716;"
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                        FontSize="20"
+                                        Foreground="DarkGray" />
+              <Button Width="70"
+                                        Height="40"
+                                        Margin="5,0"
+                                        Background="White"
+                                        BorderBrush="#55ACEE"
+                                        Content="設定"
+                                        Foreground="#55ACEE" Click="Button_Click" />
+            </StackPanel>
+          </Grid>
+          <TextBlock FontWeight="Bold"
+                                   Style="{ThemeResource SubtitleTextBlockStyle}"
+                                   Text="{Binding ScreenName}" />
+          <TextBlock Margin="0,5,0,10"
+                                   Foreground="Silver"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   Text="{Binding UserName}" />
+          <TextBlock FontSize="17"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   Text="{Binding Prof}"
+                                   TextTrimming="None"
+                                   TextWrapping="Wrap" />
+          <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" />
+            <TextBlock Margin="0,4,1,0"
+                                       FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                       Foreground="DarkGray"
+                                       Style="{ThemeResource BodyTextBlockStyle}"
+                                       Text="&#xE81D;" />
+            <TextBlock Foreground="DarkGray"
+                                       Style="{ThemeResource BodyTextBlockStyle}"
+                                       Text="" />
+
+            <Button Foreground="DarkGray"
+                                    Padding="0"
+                                    Style="{ThemeResource TextBlockButtonStyle}">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="10,5,2,0"
+                                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                               Text="&#xE71B;" />
+                <TextBlock Text="{Binding Place}" />
+              </StackPanel>
+            </Button>
+          </StackPanel>
+          <StackPanel Margin="-10,0,0,0" Orientation="Horizontal">
+            <Button Style="{ThemeResource TextBlockButtonStyle}">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Foreground="Black" Text="{Binding FollowCount}" />
+                <TextBlock Foreground="Silver" Text="フォロー" />
+              </StackPanel>
+            </Button>
+            <Button Style="{ThemeResource TextBlockButtonStyle}">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Foreground="Black" Text="{Binding FollowerCount}" />
+                <TextBlock Foreground="Silver" Text="フォロワー" />
+              </StackPanel>
+            </Button>
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+
+    </DataTemplate>
+
+    <MenuFlyout x:Key="CommandMenuFlyout">
+      <MenuFlyoutItem x:Name="userInfoItem" Text="User Information" Tag="UserInfo" Click="userInfoCommand_Click"  />
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="conveItem" Text="Conversation" Tag="Conversation" Click="conveItem_Click"  />
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="{x:Bind ViewModel.Retweet}"
+                         />
+      <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="{x:Bind ViewModel.Like}" />
+      <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click" />
+    </MenuFlyout>
+
+  </Page.Resources>
+  
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel>
+      <!--<ListView x:Name="profView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserInfos}">
+        <ListView x:Name="profView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+      <ListView.ItemTemplate>
+      <StackPanel x:Name="profView" DataContext="{x:Bind ViewModel3.UserInfos}">-->
+      <ListView x:Name="profView" DataContext="{x:Bind ViewModel3.UserInfos}" Header="{x:Bind ViewModel3.UserInfos}" HeaderTemplate="{StaticResource profview}"/>
+
+
+      <!--  </StackPanel>
+
+       </ListView.ItemTemplate>
+    </ListView>-->  
+    <Grid RelativePanel.Below="profView">
+            <Pivot x:Name="Pivot"
+                               SelectedIndex="0"
+                               >
+              <PivotItem Tag="Home.Tweet">
+                <PivotItem.Header>
+                  <TextBlock Width="100"
+                                               Margin="2,5,2,7"
+                                               HorizontalAlignment="Center"
+                                               FontFamily="Segoe UI"
+                                               FontSize="16"
+                                               IsTextScaleFactorEnabled="False"
+                                               LineHeight="14"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               MaxLines="2"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               Text="ツイート"
+                                               TextAlignment="Center" />
+                </PivotItem.Header>
+            <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserTweetLists}"  SelectionMode="Single" Margin="0,0,0,25"  >
+              <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
+              <ListView.ItemTemplate >
+                <DataTemplate >
+                  <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </PivotItem>
+              <PivotItem Tag="Home.Like">
+                <PivotItem.Header>
+                  <TextBlock Width="100"
+                                               Margin="2,5,2,7"
+                                               HorizontalAlignment="Center"
+                                               FontFamily="Segoe UI"
+                                               FontSize="16"
+                                               IsTextScaleFactorEnabled="False"
+                                               LineHeight="14"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               MaxLines="2"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               Text="いいね"
+                                               TextAlignment="Center" />
+                </PivotItem.Header>
+            <ListView x:Name="likeView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.LikeLists}"  SelectionMode="Single" Margin="0,0,0,25"  >
+              <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
+              <ListView.ItemTemplate >
+                <DataTemplate >
+                  <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </PivotItem>
+              <PivotItem Tag="Home.Follow">
+                <PivotItem.Header>
+                  <TextBlock Width="100"
+                                               Margin="2,5,2,7"
+                                               HorizontalAlignment="Center"
+                                               FontFamily="Segoe UI"
+                                               FontSize="16"
+                                               IsTextScaleFactorEnabled="False"
+                                               LineHeight="14"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               MaxLines="2"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               Text="フォロー"
+                                               TextAlignment="Center" />
+                </PivotItem.Header>
+            <ListView x:Name="followView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserFollows}"  SelectionMode="Single" Margin="0,0,0,25"  >
+              <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
+              <ListView.ItemTemplate >
+                <DataTemplate >
+                  <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </PivotItem>
+          <PivotItem Tag="Home.Friend">
+            <PivotItem.Header>
+              <TextBlock Width="100"
+                                               Margin="2,5,2,7"
+                                               HorizontalAlignment="Center"
+                                               FontFamily="Segoe UI"
+                                               FontSize="16"
+                                               IsTextScaleFactorEnabled="False"
+                                               LineHeight="14"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               MaxLines="2"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               Text="フォロワー"
+                                               TextAlignment="Center" />
+            </PivotItem.Header>
+            <ListView x:Name="friendView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserFriends}"  SelectionMode="Single" Margin="0,0,0,25"  >
+              <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
+              <ListView.ItemTemplate >
+                <DataTemplate >
+                  <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </PivotItem>
+        </Pivot>
+          </Grid>
+
+
+
+    </RelativePanel>
+
+  </Grid>
+</Page>

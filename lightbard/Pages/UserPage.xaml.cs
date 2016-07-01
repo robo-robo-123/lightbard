@@ -35,7 +35,7 @@ namespace lightbard.Pages
 
     UserResponse showedUser;
 
-    ObservableCollection<TweetClass.TweetInfo> tweet;
+    ObservableCollection<Models.TweetInfo> tweet;
     List<TweetClass.TweetInfo> userTweet;
 
     List<TweetClass.UserInfo> user;
@@ -43,13 +43,14 @@ namespace lightbard.Pages
     List<TweetClass.UserInfo> userPro2;
     private DispatcherTimer mTimer;
     private double mTime = 0.0;
-
+    public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
+    public ViewModels.TweetPageViewModel ViewModel2 { get; } = new ViewModels.TweetPageViewModel();
+    public ViewModels.UserPageViewModel ViewModel3 { get; } = new ViewModels.UserPageViewModel();
 
     public UserPage()
     {
       this.InitializeComponent();
       tokens = data.getToken();
-
 
 
       SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
@@ -81,8 +82,11 @@ namespace lightbard.Pages
     {
       //item = (TweetClass.TweetInfo)e.Parameter;
       //UserId = item.UserId;
+      //item.UserId;
       UserId = (long?)e.Parameter;
-      showasync();
+      ViewModel3.UserIdSet(UserId);
+      ViewModel3.GetUserInfos();
+      //showasync();
       //userInfo();
     }
 
@@ -143,7 +147,7 @@ namespace lightbard.Pages
       listView2.Visibility = Visibility.Visible;
       if (tokens != null)
       {
-        tweet = new ObservableCollection<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<Models.TweetInfo>();
         try
         {
          // tweet = new List<TweetClass.TweetInfo>();
@@ -270,7 +274,7 @@ namespace lightbard.Pages
       listView2.Visibility = Visibility.Visible;
       if (tokens != null)
       {
-        tweet = new ObservableCollection<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<Models.TweetInfo>();
         try
         {
         //  tweet = new List<TweetClass.TweetInfo>();

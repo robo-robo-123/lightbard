@@ -105,7 +105,7 @@ namespace lightbard
     private void Grid_Tapped_3(object sender, TappedRoutedEventArgs e)
     {
       var settings = ApplicationData.Current.RoamingSettings;
-      this.testFrame.Navigate(typeof(Pages.UserPage), (long?)settings.Values["UserId"]);
+      this.testFrame.Navigate(typeof(Pages.UsersPage), (long?)settings.Values["UserId"]);
 
     }
 

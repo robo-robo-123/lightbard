@@ -14,6 +14,11 @@ namespace lightbard.ViewModels
   {
     private Models.CommandModel Model { get; } = Models.CommandModel.Instance;
 
+   // public void Load()
+   // {
+   //   this.Model.LoadCount();
+   // }
+
     public long TweetId
     {
       get { return this.Model.TweetId; }
@@ -103,6 +108,9 @@ namespace lightbard.ViewModels
       set { this.Model.TweetInfoManager.TweetTimeline = value; }
     }
 
+
+
+
     public void TweetIdSet(long value)
     {
       this.Model.TweetInfoManager.TweetId = value;
@@ -149,6 +157,9 @@ namespace lightbard.ViewModels
       this.Model.PropertyChanged += this.TweetPageViewModel_PropatyChanged;
       // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }
+
+
+
     /*
     public void GetTweetInfos()
     {
@@ -159,4 +170,143 @@ namespace lightbard.ViewModels
 
 
   }
+
+  public class UserPageViewModel : Common.BindableBase//, IDisposable
+  {
+    private Models.UserLoad Model { get; } = Models.UserLoad.Instance;
+
+    // public ReadOnlyObservableCollection<TweetInfo> TweetInfos { get; set; }
+    // public ObservableCollection<TweetInfo> TweetInfos { get; set; }
+
+
+    //public ObservableCollection<UserInfo> UserInfos
+    public UserInfo UserInfos
+    {
+      get { return this.Model.UserInfoManager.UserInfos; }
+      set { this.Model.UserInfoManager.UserInfos = value; }
+    }
+
+
+    public ObservableCollection<TweetInfo> UserTweetLists
+    {
+      get { return this.Model.UserInfoManager.UserTweetLists; }
+      set { this.Model.UserInfoManager.UserTweetLists = value; }
+    }
+
+    public ObservableCollection<UserInfo> UserLists
+    {
+      get { return this.Model.UserInfoManager.UserLists; }
+      set { this.Model.UserInfoManager.UserLists = value; }
+    }
+
+    public ObservableCollection<TweetInfo> LikeLists
+    {
+      get { return this.Model.UserInfoManager.LikeLists; }
+      set { this.Model.UserInfoManager.LikeLists = value; }
+    }
+
+    public ObservableCollection<UserInfo> UserFollows
+    {
+      get { return this.Model.UserInfoManager.UserFollows; }
+      set { this.Model.UserInfoManager.UserFollows = value; }
+    }
+
+    public ObservableCollection<UserInfo> UserFriends
+    {
+      get { return this.Model.UserInfoManager.UserFriends; }
+      set { this.Model.UserInfoManager.UserFriends = value; }
+    }
+
+    public void UserIdSet(long? value)
+    {
+      this.Model.UserInfoManager.UserId = value;
+    }
+
+
+    public long? UserId
+    {
+      get { return this.UserId; }
+      set { this.Model.UserInfoManager.UserId = value; }
+    }
+
+    public UserPageViewModel()
+    {
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      //this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+
+    private void UserPageViewModel_PropatyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      this.OnPropertyChanged(e.PropertyName);
+    }
+
+    /*
+    public void GetTweetInfos()
+    {
+      this.Model.TweetInfoManager.getTweetInfos();
+    }
+    */
+
+    public void GetUserInfos()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.UserInfos = this.Model.UserInfoManager.getUserInfos();
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    public void GetUserLists()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.UserLists.Clear();
+      this.UserLists = this.Model.UserInfoManager.getUserLists();
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+
+    public void GetUserTweetLists()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.UserTweetLists.Clear();
+      this.UserTweetLists = this.Model.UserInfoManager.getUserTweetLists();
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+
+    public void GetUserLikeLists()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.LikeLists.Clear();
+      this.LikeLists = this.Model.UserInfoManager.getLikeLists();
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+
+    public void GetUserFollowLists()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.UserFollows.Clear();
+      this.UserFollows = this.Model.UserInfoManager.getFllowLists();
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    public void GetUserFriendLists()
+    {
+      //this.TweetInfos = new ReadOnlyObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+      this.UserFriends.Clear();
+      this.UserFriends = this.Model.UserInfoManager.getFriendLists();
+      this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
+      // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    /*
+    public void GetTweetInfos()
+    {
+      //this.TweetInfos = new ObservableCollection<TweetInfo>(this.Model.TweetInfoManager.TweetInfos);
+     // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
+    }
+    */
+
+
+  }
+
 }

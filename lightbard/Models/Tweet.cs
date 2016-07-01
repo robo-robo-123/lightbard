@@ -94,6 +94,10 @@ namespace lightbard.Models
       }
     }
 
+
+
+
+
     public ObservableCollection<TweetInfo> getTimelineInfos()
     {
       //this.TweetInfos = new ObservableCollection<TweetInfo>();
@@ -102,6 +106,8 @@ namespace lightbard.Models
       return this.TweetTimeline;
     }
 
+
+
     public ObservableCollection<TweetInfo> getTweetInfos()
     {
       //this.TweetInfos = new ObservableCollection<TweetInfo>();
@@ -109,6 +115,8 @@ namespace lightbard.Models
       getTweet();
       return this.TweetInfos;
     }
+
+
     /*
     private ObservableCollection<TweetInfo> tweetInfos;
     public ObservableCollection<TweetInfo> TweetInfos
@@ -118,7 +126,7 @@ namespace lightbard.Models
     }
     */
 
-        public ObservableCollection<TweetInfo> TweetInfos { get; set; } = new ObservableCollection<TweetInfo>()
+    public ObservableCollection<TweetInfo> TweetInfos { get; set; } = new ObservableCollection<TweetInfo>()
         {
        //   new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
         };
@@ -127,6 +135,10 @@ namespace lightbard.Models
     {
       //   new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
     };
+
+
+
+
 
   }
 
@@ -137,21 +149,5 @@ namespace lightbard.Models
     public TweetInfoManager TweetInfoManager { get; } = new TweetInfoManager();
 }
 
-  public class UserInfo : Common.BindableBase
-  {
-    public string UserName { get; set; }
-    public long? UserId { get; set; }
-    public string Text { get; set; }
-    public string ScreenName { get; set; }
-    public long Id { get; set; }
-    public string ProfileImageUrl { get; set; }
-    public string Prof { get; set; }
-    public string Date { get; set; }
-    public string Via { get; set; }
-    public int FollowCount { get; set; }
-    public int FavCount { get; set; }
-    public int TweetCount { get; set; }
-    public int FollowerCount { get; set; }
-    // public string ProfileImageUrl { get; set; }
-  }
+
 }

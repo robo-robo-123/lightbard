@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Models\CommandModel.cs" />
     <Compile Include="Models\Tweet.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Pages\BlockPage.xaml.cs">
       <DependentUpon>BlockPage.xaml</DependentUpon>
     </Compile>
@@ -154,6 +155,9 @@
     </Compile>
     <Compile Include="Pages\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UsersPage.xaml.cs">
+      <DependentUpon>UsersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserTweets.xaml.cs">
       <DependentUpon>UserTweets.xaml</DependentUpon>
@@ -255,6 +259,10 @@
     <Page Include="Pages\UserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\UsersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\UserTweets.xaml">
       <Generator>MSBuild:Compile</Generator>

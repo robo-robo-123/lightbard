@@ -39,7 +39,8 @@ namespace lightbard.Pages
 
     internal Tokens tokens;
     Tweets data = new Tweets();
-    ObservableCollection<TweetClass.TweetInfo> tweet;
+    ObservableCollection<Models.TweetInfo> tweet;
+    ObservableCollection<Models.TweetInfo> tweet2;
     //ObservableCollection<TweetClass.TweetInfo> tweetInfo;
 
     IConnectableObservable<StreamingMessage> sm_stream;
@@ -66,7 +67,7 @@ namespace lightbard.Pages
       ViewModel2.GetTimelineInfos();
 
       var settings = ApplicationData.Current.RoamingSettings;
-      tweet = new ObservableCollection<TweetClass.TweetInfo>();
+      tweet = new ObservableCollection<Models.TweetInfo>();
       //tweetInfo = new ObservableCollection<TweetClass.TweetInfo>();
 
     }
@@ -83,6 +84,7 @@ namespace lightbard.Pages
     private async void streamingtest()
     {
       try {
+        tweet2 = ViewModel2.TweetTimeline;
       sm_stream = tokens.Streaming.UserAsObservable().Publish();
       sm_stream.OfType<StatusMessage>().Subscribe(x => streamLoad(x));
 
@@ -102,21 +104,22 @@ namespace lightbard.Pages
     private async void streamLoad(StatusMessage x)
     {
       Status status = x.Status;
-      Inserttweet(tweet, status);
+      Inserttweet(ViewModel2.TweetTimeline, status);
       await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
       {
         this.listView.ItemsSource = tweet;
       });
     }
 
-    private async void Inserttweet(ObservableCollection<TweetClass.TweetInfo> tweet2, Status status)
+    //private async void Inserttweet(ObservableCollection<TweetClass.TweetInfo> tweet2, Status status)
+    private async void Inserttweet(ObservableCollection<Models.TweetInfo> tweet2, Status status)
     {
       //string con = status.Text;
       await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
       {
       if (status.RetweetedStatus != null)
       {
-        tweet2.Insert(0, new TweetClass.TweetInfo
+        tweet2.Insert(0, new Models.TweetInfo
         {
           UserName = status.RetweetedStatus.User.Name + " ",
           UserId = status.RetweetedStatus.User.Id,
@@ -148,7 +151,7 @@ namespace lightbard.Pages
       else
       {
 
-        tweet2.Insert(0, new TweetClass.TweetInfo
+        tweet2.Insert(0, new Models.TweetInfo
         {
           UserName = status.User.Name + " ",
           UserId = status.User.Id,
@@ -190,11 +193,11 @@ namespace lightbard.Pages
     }
 
 
-
+/*
     //tweetをロードするのに使います
     private async void tweetLoad()
     {
-      Task<ObservableCollection<TweetClass.TweetInfo>> tweetload = data.tweetload();
+      Task<ObservableCollection<Models.TweetInfo>> tweetload = data.tweetload();
       try
       {
         this.listView.ItemsSource = await tweetload;
@@ -212,7 +215,7 @@ namespace lightbard.Pages
          tweetLoad();
       // streamingtest();
     }
-
+    */
 
     //リプライページに飛びます．
     private void replyButton_Click(object sender, RoutedEventArgs e)
@@ -230,18 +233,18 @@ namespace lightbard.Pages
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
     {
 
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
     }
 
     private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
   }
 
 
     private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
     }
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
@@ -256,7 +259,7 @@ namespace lightbard.Pages
 
     public void itemStock()
     {
-      var item_test = this.listView.SelectedItem as TweetClass.TweetInfo;
+      var item_test = this.listView.SelectedItem as Models.TweetInfo;
       if (item_test == null)
       {
         return;

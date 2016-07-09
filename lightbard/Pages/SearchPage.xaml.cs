@@ -30,9 +30,11 @@ namespace lightbard.Pages
     internal Tokens tokens;
     public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();
     public ViewModels.TweetPageViewModel ViewModel2 { get; } = new ViewModels.TweetPageViewModel();
+    public ViewModels.UserPageViewModel ViewModel3 { get; } = new ViewModels.UserPageViewModel();
 
     ObservableCollection<Models.TweetInfo> tweet;
     Models.TweetInfo item;
+    Models.UserInfo item_user;
     List<TweetClass.TweetInfo> userTweet;
 
     List<TweetClass.UserInfo> user;
@@ -174,7 +176,7 @@ namespace lightbard.Pages
       item = this.searchView.SelectedItem as Models.TweetInfo;
       ViewModel.TweetIdSet(item.Id);
       ViewModel2.TweetIdSet(item.Id);
-      itemStock();
+      //itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 
@@ -197,5 +199,26 @@ namespace lightbard.Pages
       this.Frame.Navigate(typeof(ConvePage), item.Id);
     }
 
+    private void UserLists_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      try
+      {
+      item_user = this.userSearchView.SelectedItem as Models.UserInfo;
+      ViewModel3.UserIdSet(item_user.UserId);
+      }
+      catch(Exception ex)
+      {
+        data.toast(ex.Message);
+      }
+
+      //itemStock();
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+
+    }
+
+    private void userInfoItem2_Click(object sender, RoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UserPage), item_user.UserId);
+    }
   }
 }

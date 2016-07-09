@@ -28,13 +28,11 @@ namespace lightbard.Pages
     public ViewModels.TweetPageViewModel ViewModel2 { get; } = new ViewModels.TweetPageViewModel();
     public ViewModels.UserPageViewModel ViewModel3 { get; } = new ViewModels.UserPageViewModel();
     Models.TweetInfo item;
+    Models.UserInfo item_user;
 
     public UsersPage()
     {
       this.InitializeComponent();
-
-
-
 
       SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
       {
@@ -62,13 +60,11 @@ namespace lightbard.Pages
     private void Button_Click(object sender, RoutedEventArgs e)
     {
       ViewModel3.GetUserInfos();
-
     }
 
     //リプライページに飛びます．
     private void replyButton_Click(object sender, RoutedEventArgs e)
     {
-
       this.Frame.Navigate(typeof(ReplayPage), item);
     }
 
@@ -80,15 +76,13 @@ namespace lightbard.Pages
     //userinfo
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
     {
-
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
     }
 
     private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
     {
       this.Frame.Navigate(typeof(UserPage), item.UserId);
     }
-
 
     private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
@@ -97,19 +91,17 @@ namespace lightbard.Pages
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      //var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      item = this.listView.SelectedItem as Models.TweetInfo;
       try
       {
-      ViewModel.TweetIdSet(item.Id);
-      ViewModel2.TweetIdSet(item.Id);
-      itemStock();
+        item = this.listView.SelectedItem as Models.TweetInfo;
+        ViewModel.TweetIdSet(item.Id);
+        ViewModel2.TweetIdSet(item.Id);
+        //itemStock();
       }
       catch(Exception ex)
       {
         
       }
-
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
 
@@ -136,10 +128,67 @@ namespace lightbard.Pages
     {
       item = this.listView.SelectedItem as Models.TweetInfo;
       //var item = this.listView.SelectedItem as TweetClass.TweetInfo;
-      ViewModel.TweetIdSet(item.Id);
+      //ViewModel.TweetIdSet(item.Id);
       ViewModel2.TweetIdSet(item.Id);
       itemStock();
       FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
+
+
+    private void likeList_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      try
+      {
+        item = this.likeView.SelectedItem as Models.TweetInfo;
+        //ViewModel.TweetIdSet(item.Id);
+        ViewModel3.UserIdSet(item.UserId);
+        //ViewModel2.TweetIdSet(item.Id);
+        //itemStock();
+      }
+      catch (Exception ex)
+      {
+
+      }
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    private void friendList_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      try
+      {
+        item_user = this.friendView.SelectedItem as Models.UserInfo;
+        //ViewModel.TweetIdSet(item.Id);
+        ViewModel3.UserIdSet(item_user.UserId);
+        //itemStock();
+      }
+      catch (Exception ex)
+      {
+
+      }
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    private void followList_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+      try
+      {
+        item_user = this.followView.SelectedItem as Models.UserInfo;
+        //ViewModel.TweetIdSet(item.Id);
+        ViewModel3.UserIdSet(item_user.UserId);
+        //itemStock();
+      }
+      catch (Exception ex)
+      {
+
+      }
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    private void userInfoItem2_Click(object sender, RoutedEventArgs e)
+    {
+      this.Frame.Navigate(typeof(UsersPage), item_user.UserId);
+
+    }
+
   }
 }

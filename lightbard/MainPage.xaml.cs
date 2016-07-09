@@ -28,6 +28,7 @@ namespace lightbard
     public sealed partial class MainPage : Page
     {
 
+    public ViewModels.UserPageViewModel ViewModel3 { get; } = new ViewModels.UserPageViewModel();
     internal Tokens tokens;
     Tweets data = new Tweets();
     public MainPage()
@@ -105,6 +106,10 @@ namespace lightbard
     private void Grid_Tapped_3(object sender, TappedRoutedEventArgs e)
     {
       var settings = ApplicationData.Current.RoamingSettings;
+      var UserId = (long?)settings.Values["UserId"];
+      ViewModel3.UserIdSet(UserId);
+      ViewModel3.GetUserInfos();
+
       this.testFrame.Navigate(typeof(Pages.UsersPage), (long?)settings.Values["UserId"]);
 
     }

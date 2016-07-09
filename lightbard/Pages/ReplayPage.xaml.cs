@@ -196,6 +196,7 @@ namespace lightbard.Pages
     private /*async*/ void tweetImage1_Tapped(object sender, TappedRoutedEventArgs e)
     {
 
+      //this.Frame.Navigate(typeof(ImageView), status.ExtendedEntities.Media[0]);
       this.Frame.Navigate(typeof(ImageView), tweetImage1.Source);
 
       /*

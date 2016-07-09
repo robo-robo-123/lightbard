@@ -166,7 +166,7 @@ namespace lightbard.Class
       }
       try
       {
-        foreach (var status in await tokens.Favorites.ListAsync(count => tw_count))
+        foreach (var status in await tokens.Favorites.ListAsync(user_id => UserId, count => tw_count))
         {
           Addtweet2(tweet, status);
         }
@@ -611,11 +611,12 @@ namespace lightbard.Class
         UserName = user.Name,
         UserId = user.Id,
         ScreenName = "@" + user.ScreenName,
-        ProfileImageUrl = user.ProfileImageUrlHttps,
+
         FollowCount = user.FollowersCount,
         FavCount = user.FavouritesCount,
         FollowerCount = user.FriendsCount,
-        Prof = user.Description
+        Prof = user.Description,
+        ProfileImageUrl = user.ProfileImageUrlHttps,
 
       }
 );

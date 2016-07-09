@@ -17,6 +17,9 @@
       <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="{x:Bind ViewModel.Like}" />
       <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click" />
     </MenuFlyout>
+    <MenuFlyout x:Key="CommandMenuFlyout2">
+      <MenuFlyoutItem x:Name="userInfoItem2" Text="User Information" Tag="UserInfo" Click="userInfoItem2_Click"   />
+    </MenuFlyout>
   </Page.Resources>
 
 
@@ -63,7 +66,7 @@
           <ListView x:Name="userSearchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
           <ListView.ItemTemplate >
             <DataTemplate >
-              <local:UserLists  />
+                  <local:UserLists  FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout2}" Tapped="UserLists_Tapped" />
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>

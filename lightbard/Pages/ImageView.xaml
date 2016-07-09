@@ -12,9 +12,16 @@
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
        <Image x:Name="imageview" Margin="0,50,0,0"/> 
     <CommandBar ClosedDisplayMode="Compact" Grid.Row="1" VerticalAlignment="Top" >
+      <!--
       <AppBarButton x:Name="saveButton"  Label="Cancel" Click="saveButton_Click" >
         <AppBarButton.Icon>
           <FontIcon Glyph="&#xE74E;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarButton.Icon>
+      </AppBarButton>
+      -->
+      <AppBarButton x:Name="webButton"  Label="Open Web" Click="webButton_Click"  >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE7C5;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
         </AppBarButton.Icon>
       </AppBarButton>
       <AppBarButton x:Name="cancelButton"  Label="Cancel" Click="cancelButton_Click" >
@@ -24,6 +31,17 @@
       </AppBarButton>
 
     </CommandBar>
+
+    <ContentDialog x:Name="webDlg"
+                       Title="Webブラウザで閲覧しますか？"
+                       IsPrimaryButtonEnabled="True"
+                       IsSecondaryButtonEnabled="True"
+                       PrimaryButtonText="OK"
+                       SecondaryButtonText="Cancel">
+      <Grid HorizontalAlignment="Stretch" Width="Auto">
+        <TextBlock Text="Webブラウザを起動し、Tweetページへと遷移します。" />
+      </Grid>
+    </ContentDialog>
 
   </Grid>
 </Page>

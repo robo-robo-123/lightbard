@@ -196,8 +196,8 @@ namespace lightbard.Pages
     private /*async*/ void tweetImage1_Tapped(object sender, TappedRoutedEventArgs e)
     {
 
-      //this.Frame.Navigate(typeof(ImageView), status.ExtendedEntities.Media[0]);
-      this.Frame.Navigate(typeof(ImageView), tweetImage1.Source);
+      this.Frame.Navigate(typeof(ImageView), status.ExtendedEntities.Media[0]);
+      //this.Frame.Navigate(typeof(ImageView), tweetImage1.Source);
 
       /*
             var result = await this.webDlg.ShowAsync();
@@ -219,7 +219,9 @@ namespace lightbard.Pages
 
     private async void tweetImage3_Tapped(object sender, TappedRoutedEventArgs e)
     {
+      this.Frame.Navigate(typeof(ImageView), status.ExtendedEntities.Media[2]);
 
+      /*
       var result = await this.webDlg.ShowAsync();
       if (result == ContentDialogResult.Primary)
       {
@@ -233,6 +235,7 @@ namespace lightbard.Pages
       {
         System.Diagnostics.Debug.WriteLine("None");
       }
+      */
       /*
       var uri = new Uri(status.ExtendedEntities.Media[2].Url.ToString());
 
@@ -253,7 +256,9 @@ namespace lightbard.Pages
 
     private async void tweetImage2_Tapped(object sender, TappedRoutedEventArgs e)
     {
+      this.Frame.Navigate(typeof(ImageView), status.ExtendedEntities.Media[1]);
 
+      /*
       var result = await this.webDlg.ShowAsync();
       if (result == ContentDialogResult.Primary)
       {
@@ -267,6 +272,7 @@ namespace lightbard.Pages
       {
         System.Diagnostics.Debug.WriteLine("None");
       }
+      */
       /*
       var uri = new Uri(status.ExtendedEntities.Media[1].Url.ToString());
 
@@ -286,7 +292,9 @@ namespace lightbard.Pages
 
     private async void tweetImage4_Tapped(object sender, TappedRoutedEventArgs e)
     {
+      this.Frame.Navigate(typeof(ImageView), status.ExtendedEntities.Media[3]);
 
+      /*
       var result = await this.webDlg.ShowAsync();
       if (result == ContentDialogResult.Primary)
       {
@@ -300,6 +308,7 @@ namespace lightbard.Pages
       {
         System.Diagnostics.Debug.WriteLine("None");
       }
+      */
       /*
       var uri = new Uri(status.ExtendedEntities.Media[3].Url.ToString());
 

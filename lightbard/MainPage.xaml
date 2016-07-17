@@ -67,10 +67,12 @@
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE77B;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
             <TextBlock Text="User" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0"/>
           </Grid>
+          <!--
           <Grid Tapped="Grid_Tapped_6" >
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE712;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
             <TextBlock Text="Test!!" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0"/>
           </Grid>
+          -->
           <Grid Tapped="Grid_Tapped_2" >
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
             <TextBlock Text="Settings" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0"/>

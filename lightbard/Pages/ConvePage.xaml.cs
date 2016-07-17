@@ -76,7 +76,7 @@ namespace lightbard.Pages
       }
       catch(Exception ex) {
         var tes = ex.Message;
-        data.toast("2" + tes);
+        //data.toast("2" + tes);
         return;
       }
 

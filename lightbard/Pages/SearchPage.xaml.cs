@@ -156,18 +156,18 @@ namespace lightbard.Pages
     private void userInfoCommand_Click(object sender, RoutedEventArgs e)
     {
 
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
     }
 
     private void profileImage_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
     }
 
 
     private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
-      this.Frame.Navigate(typeof(UserPage), item.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item.UserId);
     }
 
     private void TweetsList_Tapped(object sender, TappedRoutedEventArgs e)
@@ -218,7 +218,7 @@ namespace lightbard.Pages
 
     private void userInfoItem2_Click(object sender, RoutedEventArgs e)
     {
-      this.Frame.Navigate(typeof(UserPage), item_user.UserId);
+      this.Frame.Navigate(typeof(UsersPage), item_user.UserId);
     }
   }
 }

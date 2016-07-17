@@ -109,7 +109,18 @@ namespace lightbard.ViewModels
     }
 
 
+    public ObservableCollection<TweetInfo> SerachTweets
+    {
+      get { return this.Model.TweetInfoManager.SearchTweets; }
+      set { this.Model.TweetInfoManager.SearchTweets = value; }
+    }
 
+
+    public string Word
+    {
+      get { return this.Model.TweetInfoManager.Word; }
+      set { this.Model.TweetInfoManager.Word = value; }
+    }
 
     public void TweetIdSet(long value)
     {
@@ -158,6 +169,10 @@ namespace lightbard.ViewModels
       // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }
 
+    public void GetSearchTweets()
+    {
+      this.Model.TweetInfoManager.GetSearchTweets();
+    }
 
 
     /*
@@ -215,6 +230,19 @@ namespace lightbard.ViewModels
     {
       get { return this.Model.UserInfoManager.UserFriends; }
       set { this.Model.UserInfoManager.UserFriends = value; }
+    }
+
+    public ObservableCollection<UserInfo> SerachUsers
+    {
+      get { return this.Model.UserInfoManager.SearchUsers; }
+      set { this.Model.UserInfoManager.SearchUsers = value; }
+    }
+
+
+    public string User_word
+    {
+      get { return this.Model.UserInfoManager.User_word; }
+      set { this.Model.UserInfoManager.User_word = value; }
     }
 
     public void UserIdSet(long? value)
@@ -298,6 +326,11 @@ namespace lightbard.ViewModels
       this.Model.PropertyChanged += this.UserPageViewModel_PropatyChanged;
       // this.TweetInfos = this.Model.TweetInfoManager.getTweetInfos();
     }
+    public void GetSearchUsers()
+    {
+      this.Model.UserInfoManager.GetSearchUsers();
+    }
+
     /*
     public void GetTweetInfos()
     {

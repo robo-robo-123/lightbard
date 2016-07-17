@@ -50,6 +50,13 @@ namespace lightbard.Models
       set { this.SetProperty(ref this.userId, value); }
     }
 
+    private string user_word;
+    public string User_word
+    {
+      get { return this.user_word; }
+      set { this.SetProperty(ref this.user_word, value); }
+    }
+
     public async void getUser()
     {
       try
@@ -150,6 +157,24 @@ namespace lightbard.Models
       }
     }
 
+    public void GetSearchUsers()
+    {
+      try
+      {
+        this.SearchUsers.Clear();
+        data.searchUser(this.SearchUsers, this.User_word);
+        //        data.likeload(this.UserFriends);
+      }
+      catch (Exception ex)
+      {
+        this.SearchUsers.Add(new Models.UserInfo
+        {
+          Text = ex.Message
+        }
+                );
+      }
+    }
+
     public ObservableCollection<UserInfo> getUserLists()
     {
       getUserList();
@@ -210,6 +235,11 @@ namespace lightbard.Models
     };
 
     public ObservableCollection<UserInfo> UserFriends { get; set; } = new ObservableCollection<UserInfo>()
+    {
+         new UserInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
+    };
+
+    public ObservableCollection<UserInfo> SearchUsers { get; set; } = new ObservableCollection<UserInfo>()
     {
          new UserInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
     };

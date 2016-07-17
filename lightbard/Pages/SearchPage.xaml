@@ -32,12 +32,11 @@
         <StackPanel>
           <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
             <CommandBar.Content>
-              <TextBox x:Name="serchBox2" Width="150" Height="49" />
+              <TextBox x:Name="serchBox2" Width="150" Height="49" Text="{x:Bind ViewModel2.Word, Mode=TwoWay}"/>
             </CommandBar.Content>
-              <AppBarButton x:Name="tweetButton"  Label="Tweet Search" Icon="Find" Click="searchButtom_Click"/>
+              <AppBarButton x:Name="tweetButton"  Label="Tweet Search" Icon="Find" Click="{x:Bind ViewModel2.GetSearchTweets}"/>
             </CommandBar>
-
-            <ListView x:Name="searchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
+            <ListView x:Name="searchView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel2.SerachTweets}"  SelectionMode="Single" >
           <ListView.ItemTemplate >
             <DataTemplate >
                   <local:TweetsList  FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped"/>
@@ -59,11 +58,11 @@
         <StackPanel>
           <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
             <CommandBar.Content>
-              <TextBox x:Name="serchBox" Width="100" />
+                <TextBox x:Name="serchBox" Width="100" Text="{x:Bind ViewModel3.User_word, Mode=TwoWay}"/>
             </CommandBar.Content>
-            <AppBarButton x:Name="userButton"  Label="User Search" Icon="People" Click="userButton_Click"/>
+              <AppBarButton x:Name="userButton"  Label="User Search" Icon="People" Click="{x:Bind ViewModel3.GetSearchUsers}"/>
           </CommandBar>
-          <ListView x:Name="userSearchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
+            <ListView x:Name="userSearchView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.SerachUsers}"  SelectionMode="Single" >
           <ListView.ItemTemplate >
             <DataTemplate >
                   <local:UserLists  FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout2}" Tapped="UserLists_Tapped" />

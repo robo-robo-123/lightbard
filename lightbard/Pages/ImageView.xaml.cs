@@ -60,10 +60,12 @@ namespace lightbard.Pages
       if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
     }
 
+    /*
     private void saveButton_Click(object sender, RoutedEventArgs e)
     {
 
     }
+    */
 
     private async void webOpen(string url)
     {

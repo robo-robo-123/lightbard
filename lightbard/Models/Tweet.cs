@@ -55,6 +55,13 @@ namespace lightbard.Models
       set { this.SetProperty(ref this.tweetId, value); }
     }
 
+    private string word;
+    public string Word
+    {
+      get { return this.word; }
+      set { this.SetProperty(ref this.word, value); }
+    }
+
 
 
     public async void getTweet()
@@ -94,7 +101,21 @@ namespace lightbard.Models
       }
     }
 
-
+    public void GetSearchTweets()
+    {
+      try
+      {
+        data.searchTweet(this.SearchTweets, this.word);
+      }
+      catch (Exception ex)
+      {
+        this.SearchTweets.Add(new Models.TweetInfo
+        {
+          Text = ex.Message
+        }
+                );
+      }
+    }
 
 
 
@@ -116,6 +137,11 @@ namespace lightbard.Models
       return this.TweetInfos;
     }
 
+    public ObservableCollection<TweetInfo> getSearchTweets()
+    {
+      GetSearchTweets();
+      return this.SearchTweets;
+    }
 
     /*
     private ObservableCollection<TweetInfo> tweetInfos;
@@ -136,7 +162,10 @@ namespace lightbard.Models
       //   new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
     };
 
-
+    public ObservableCollection<TweetInfo> SearchTweets { get; set; } = new ObservableCollection<TweetInfo>()
+    {
+      //   new TweetInfo {Text="aaaaaaaaaaaaaaaaaaaa" }
+    };
 
 
 

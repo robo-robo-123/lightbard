@@ -105,12 +105,12 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString()+"timeline");
+       // toast(tw_count.ToString()+"timeline");
       }
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("1"+tes);
+       // toast("1"+tes);
       }
       try
       {
@@ -122,7 +122,7 @@ namespace lightbard.Class
       catch(Exception ex)
       {
         var tes = ex.Message;
-        toast("2"+tes);
+        //toast("2"+tes);
       }
     }
 
@@ -136,7 +136,7 @@ namespace lightbard.Class
         // tw_count = (int)value.Values["tweetsCount"];
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString());
+        //toast(tw_count.ToString());
       }
       catch(Exception ex)
       {
@@ -157,12 +157,12 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString()+"like");
+      //  toast(tw_count.ToString()+"like");
       }
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("1" + tes);
+        //toast("1" + tes);
       }
       try
       {
@@ -174,7 +174,7 @@ namespace lightbard.Class
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("2" + tes);
+        //toast("2" + tes);
       }
     }
 
@@ -184,12 +184,12 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString()+"user timeline");
+        //toast(tw_count.ToString()+"user timeline");
       }
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("1" + tes);
+        //toast("1" + tes);
       }
       try
       {
@@ -201,7 +201,7 @@ namespace lightbard.Class
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("2" + tes);
+        //toast("2" + tes);
       }
     }
 
@@ -211,12 +211,12 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString()+"fllower");
+        //toast(tw_count.ToString()+"fllower");
       }
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("1" + tes);
+        //toast("1" + tes);
       }
       try
       {
@@ -228,7 +228,7 @@ namespace lightbard.Class
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("2" + tes);
+        //toast("2" + tes);
       }
     }
 
@@ -238,12 +238,12 @@ namespace lightbard.Class
       {
         var x = ViewModel.tweetCount();
         tw_count = int.Parse(x);
-        toast(tw_count.ToString()+"friend");
+        //toast(tw_count.ToString()+"friend");
       }
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("1" + tes);
+        //toast("1" + tes);
       }
       try
       {
@@ -255,9 +255,55 @@ namespace lightbard.Class
       catch (Exception ex)
       {
         var tes = ex.Message;
-        toast("2" + tes);
+        //toast("2" + tes);
       }
     }
+
+    public async void searchTweet(ObservableCollection<Models.TweetInfo> tweet, string search_word)
+    {
+      if (tokens != null)
+      {
+        try
+        {
+          //string search_word = serchBox2.Text;
+          var result = await tokens.Search.TweetsAsync(count => 100, q => search_word);
+
+          //foreach (var status in await tokens.Search.TweetsAsync(q => serchBox.Text, count => 200, lang => "ja"))
+          foreach (var status in result)
+          {
+            Addtweet2(tweet, status);
+          }
+          //searchView.ItemsSource = tweet;
+        }
+        catch (Exception ex)
+        {
+          //          viewTextBox.Text = ex.Source;
+        }
+      }
+    }
+
+    public async void searchUser(ObservableCollection<Models.UserInfo> user, string search_word)
+    {
+      if (tokens != null)
+      {
+        try
+        {
+          //string search_word = serchBox.Text;
+          var result = await tokens.Users.SearchAsync(count => 100, q => search_word);
+
+          //foreach (var status in await tokens.Search.TweetsAsync(q => serchBox.Text, count => 200, lang => "ja"))
+          foreach (var status in result)
+          {
+            AddInfo2(user, status);
+          }
+        }
+        catch (Exception ex)
+        {
+          //          viewTextBox.Text = ex.Source;
+        }
+      }
+    }
+
 
     //ストリーミング
     public async void streamingtest(ObservableCollection<TweetClass.TweetInfo> tweet)
@@ -271,7 +317,7 @@ namespace lightbard.Class
         //testBlock.Text = "接続中です";
         var xx = ViewModel.streamCount();
         int tw_count = int.Parse(xx);
-        toast(tw_count.ToString());
+        //toast(tw_count.ToString());
         await Task.Delay(tw_count * 600);
         disposable.Dispose();
         //streamButton.IsChecked = false;

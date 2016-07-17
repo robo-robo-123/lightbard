@@ -27,7 +27,7 @@ namespace lightbard
   /// </summary>
   public sealed partial class SettingsFrame : Page
   {
-    OAuth.OAuthSession session;
+    //OAuth.OAuthSession session;
     internal Tokens tokens;
 
     public ViewModels.CommandViewModel ViewModel { get; } = new ViewModels.CommandViewModel();

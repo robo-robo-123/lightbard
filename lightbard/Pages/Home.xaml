@@ -50,7 +50,6 @@
     </Grid.RowDefinitions>
 -->
 
-
     <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel2.TweetTimeline}"  SelectionMode="Single" Margin="0,0,0,25"  >
       <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
       <ListView.ItemTemplate >

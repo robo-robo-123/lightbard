@@ -130,8 +130,9 @@
       <!--<ListView x:Name="profView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel3.UserInfos}">
         <ListView x:Name="profView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
       <ListView.ItemTemplate>
-      <StackPanel x:Name="profView" DataContext="{x:Bind ViewModel3.UserInfos}">-->
-      <ListView x:Name="profView" DataContext="{x:Bind ViewModel3.UserInfos}" Header="{x:Bind ViewModel3.UserInfos}" HeaderTemplate="{StaticResource profview}"/>
+      <StackPanel x:Name="profView" DataContext="{x:Bind ViewModel3.UserInfos}">
+      <ListView x:Name="profView" DataContext="{x:Bind ViewModel3.UserInfos}" Header="{x:Bind ViewModel3.UserInfos}" HeaderTemplate="{StaticResource profview}"/>-->
+      <ListView x:Name="profView" DataContext="{Binding}" Header="{Binding}" HeaderTemplate="{StaticResource profview}"/>
 
 
       <!--  </StackPanel>

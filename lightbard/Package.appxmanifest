@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="58058.LightBardtest" Publisher="CN=1520FB5D-3CB5-4E7F-ACA5-80C25D0E7079" Version="1.1.7.0" />
+  <Identity Name="58058.LightBardtest" Publisher="CN=1520FB5D-3CB5-4E7F-ACA5-80C25D0E7079" Version="1.1.26.0" />
   <mp:PhoneIdentity PhoneProductId="fefb3c0e-cd5b-4400-9768-01e3abcc43e4" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>LightBard_test</DisplayName>

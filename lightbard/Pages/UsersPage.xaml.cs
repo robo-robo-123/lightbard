@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
@@ -54,7 +55,18 @@ namespace lightbard.Pages
       ViewModel3.GetUserLikeLists();
       ViewModel3.GetUserFollowerLists();
       ViewModel3.GetUserFriendLists();
+      ViewModel3.GetUserInfos();
+
+      UserLoad();
+
       //this.tweetFrame.Navigate(typeof(Home));
+    }
+
+    private async void UserLoad()
+    {
+      await Task.Delay(1000);
+      profView.Header = ViewModel3.UserInfos;
+      profView.DataContext = ViewModel3.UserInfos;
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

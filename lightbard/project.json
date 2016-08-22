@@ -1,7 +1,8 @@
 ﻿{
   "dependencies": {
-    "CoreTweet": "0.6.2.277",
+    "CoreTweet": "0.7.1.345",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.Toolkit.Uwp": "1.0.0",
     "Rx-Main": "2.2.5"
   },
   "frameworks": {

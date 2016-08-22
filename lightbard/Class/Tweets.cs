@@ -36,6 +36,7 @@ namespace lightbard.Class
     public Tweets()
     {
       SaveKey();
+
       //ViewModel.Load();
     }
 
@@ -45,6 +46,11 @@ namespace lightbard.Class
       settings.Values["ApiKey"] = "rXBbSNc4nf01jY2tYYhcQlLdQ";
       settings.Values["ApiSecret"] = "nSaEdTdvVuAHbv8torT1RzvdHRLdF0b6XiUCO5n5Ciq43gv3vs";
     }
+
+   public void LoadKey()
+    {
+      SaveKey();
+    } 
 
     public CoreTweet.Tokens getToken()
     {

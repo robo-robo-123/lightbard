@@ -1,1 +1,1 @@
-C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\lightbard\lightbard\AppPackages\lightbard_1.1.1.0\lightbard_1.1.1.0_x86.appxbundle
+C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\lightbard\lightbard\AppPackages\lightbard_1.1.26.0\lightbard_1.1.26.0_x86_x64_arm.appxbundle

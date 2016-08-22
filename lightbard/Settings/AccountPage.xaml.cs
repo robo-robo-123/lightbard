@@ -32,6 +32,8 @@ namespace lightbard.Settings
     public AccountPage()
     {
       this.InitializeComponent();
+      Tweets data = new Tweets();
+
       initAuthrize();
 
     }

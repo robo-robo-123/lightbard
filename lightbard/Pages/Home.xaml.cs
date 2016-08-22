@@ -92,7 +92,7 @@ namespace lightbard.Pages
         //testBlock.Text = "接続中です";
         var xx = ViewModel.streamCount();
         int tw_count = int.Parse(xx);
-        await Task.Delay(tw_count * 600);
+        await Task.Delay(tw_count * 60000);
       disposable.Dispose();
       streamButton.IsChecked = false;
         //testBlock.Text = "接続終了";
@@ -107,7 +107,7 @@ namespace lightbard.Pages
       Inserttweet(ViewModel2.TweetTimeline, status);
       await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
       {
-        this.listView.ItemsSource = tweet;
+        this.listView.ItemsSource = tweet2;
       });
     }
 

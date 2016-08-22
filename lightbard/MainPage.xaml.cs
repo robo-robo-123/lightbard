@@ -34,6 +34,7 @@ namespace lightbard
     public MainPage()
         {
             this.InitializeComponent();
+      data.LoadKey();
       var reg = new lightbard.Class.ClientData();
       tokens = data.getToken();
       nameChange();

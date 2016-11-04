@@ -5,7 +5,7 @@
     xmlns:local="using:lightbard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     NavigationCacheMode="Enabled"  
     mc:Ignorable="d">
 
@@ -50,16 +50,25 @@
     </Grid.RowDefinitions>
 -->
 
+    <controls:PullToRefreshListView  x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel2.TweetTimeline}"  SelectionMode="Single" Margin="0,0,0,25"
+                               	OverscrollLimit="0.4"	PullThreshold="100"	RefreshRequested="{x:Bind ViewModel2.GetTimelineInfos}" >
 
+      <ListView.ItemTemplate >
+        <DataTemplate >
+          <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </controls:PullToRefreshListView>
+    
+    <!--
     <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel2.TweetTimeline}"  SelectionMode="Single" Margin="0,0,0,25"  >
-      <!--<ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,25"  >-->
       <ListView.ItemTemplate >
         <DataTemplate >
           <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
-
+-->
     <Popup x:Name="popFlyout" IsOpen="False" IsLightDismissEnabled="True">
       <TextBlock x:Name="popBlock" />
     </Popup>
